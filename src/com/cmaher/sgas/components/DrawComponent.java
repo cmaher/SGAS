@@ -34,7 +34,7 @@ public class DrawComponent extends Component {
     }
 
     public void draw() {
-        Vector2 origin = place.getCenter();
+        Vector2 origin = new Vector2();
 
         sprite.setPosition(place.getX(), place.getY());
         sprite.setOrigin(origin.x, origin.y);

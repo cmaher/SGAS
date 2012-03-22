@@ -4,12 +4,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.cmaher.sgas.entities.Entity;
 
 public class PlaceComponent extends Component {
-    protected float      x;
-    protected float      y;
+    protected float   x;
+    protected float   y;
     protected int     width;
     protected int     height;
     protected float   angle;
-    protected Vector2 center; // relative to x, y
+    protected Vector2 origin;
 
     public PlaceComponent(Entity master) {
         super(master);
@@ -27,21 +27,19 @@ public class PlaceComponent extends Component {
         this.width = width;
         this.height = height;
         this.angle = 0;
-        center = new Vector2(x + width / 2, y + height / 2);
     }
 
-    private void updateCenter() {
-        center.x = x + width / 2;
-        center.y = y + height / 2;
+    public void setPosition(float x, float y) {
+        this.x = x;
+        this.y = y;
     }
-    
+
     public float getX() {
         return x;
     }
 
     public void setX(float x) {
         this.x = x;
-        updateCenter();
     }
 
     public float getY() {
@@ -50,7 +48,6 @@ public class PlaceComponent extends Component {
 
     public void setY(float y) {
         this.y = y;
-        updateCenter();
     }
 
     public int getWidth() {
@@ -59,7 +56,6 @@ public class PlaceComponent extends Component {
 
     public void setWidth(int width) {
         this.width = width;
-        updateCenter();
     }
 
     public int getHeight() {
@@ -68,7 +64,6 @@ public class PlaceComponent extends Component {
 
     public void setHeight(int height) {
         this.height = height;
-        updateCenter();
     }
 
     public float getAngle() {
@@ -80,6 +75,14 @@ public class PlaceComponent extends Component {
     }
 
     public Vector2 getCenter() {
-        return center;
+        return new Vector2(x + width / 2, y + height / 2);
+    }
+
+    public Vector2 getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(Vector2 origin) {
+        this.origin = origin;
     }
 }

@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.cmaher.sgas.entities.Player;
 
 public class SGASGame implements ApplicationListener {
-    public static final String ASSETS = "assets/"; //NOTE: "assets\" fails
+    public static final String ASSETS = "assets/"; // NOTE: "assets\" fails
     public AssetWrapper        assetWrapper;
     public SpriteBatch         spriteBatch;
 
@@ -18,10 +18,10 @@ public class SGASGame implements ApplicationListener {
         assetWrapper = new AssetWrapper();
         spriteBatch = new SpriteBatch();
         Gdx.gl.glClearColor(1f, 1f, 1f, 1f);
-        
+
         player = new Player(this);
-        
-        assetWrapper.addTextureAsset(Player.PLAYER_SPRITE);
+
+        assetWrapper.addTextureAsset(Player.SPRITE);
         assetWrapper.getAssetManager().finishLoading();
     }
 
@@ -41,7 +41,7 @@ public class SGASGame implements ApplicationListener {
     public void render() {
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
         spriteBatch.begin();
-        player.update(0);
+        player.update(Gdx.graphics.getDeltaTime());
         spriteBatch.end();
     }
 
