@@ -9,10 +9,17 @@ import com.badlogic.gdx.math.Vector2;
 import com.cmaher.sgas.entities.Entity;
 
 public class PlayerInputComponent extends Component {
-    private final List<PlayerKeyInput> PLAYER_KEYS = new LinkedList<PlayerKeyInput>();
+    private final List<PlayerKeyInput> PLAYER_KEYS  = new LinkedList<PlayerKeyInput>();
+    private final static Vector2       ZERO         = new Vector2(0f, 0f);
+
+    private final static float         ACCELERATION = 1024;
+    private final static float         DECELERATION = 1024;
+    private final static float         FUZZY_DELTA  = .02f;
 
     private PlaceComponent             place;
     private PhysicsComponent           phys;
+    private boolean                    decelerating = false;
+    private float                      cumDelta     = 0;
 
     public PlayerInputComponent(Entity master, PlaceComponent place,
             PhysicsComponent phys) {
@@ -27,40 +34,68 @@ public class PlayerInputComponent extends Component {
     }
 
     public void update(float delta) {
-        updateVelocity();
+        updateVelocity(delta);
         updateAngle();
     }
 
-    private void updateVelocity() {
-        Vector2 velocity = new Vector2();
+    private void updateVelocity(float delta) {
+        Vector2 direction = new Vector2();
 
         // sum all the input vectors to get the total direction
         for (PlayerKeyInput input : PLAYER_KEYS) {
             if (Gdx.input.isKeyPressed(input.getKeyCode())) {
-                velocity.add(input.getDirection());
+                direction.add(input.getDirection());
             }
         }
 
-        velocity.nor().mul(phys.getMaxSpeed());
-        phys.setVelocity(velocity);
+        direction.nor();
+        if (direction.x == 0 && direction.y == 0) {
+
+            if (decelerating) {
+                Vector2 vDir = phys.getVelocity().cpy().nor();
+                Vector2 aDir = phys.getAcceleration().cpy().nor();
+                if (((vDir.x >= 0 && aDir.x >= 0) || (vDir.x <= 0 && aDir.x <= 0))
+                        && ((vDir.y >= 0 && aDir.y >= 0) || (vDir.y <= 0 && aDir.y <= 0))) {
+                    phys.setAcceleration(ZERO);
+                    phys.setVelocity(ZERO);
+                    decelerating = false;
+                }
+            }
+
+            if (!decelerating
+                    && (phys.getAcceleration().x != 0 || phys.getAcceleration().y != 0)) {
+                phys.setAcceleration(ZERO.cpy().sub(phys.getAcceleration()),
+                        DECELERATION);
+                decelerating = true;
+            }
+
+            // stop decelerating when velocity is 0 or reversed
+        } else {
+            if (cumDelta < FUZZY_DELTA) {
+                cumDelta += delta;
+            } else {
+                phys.setAcceleration(direction, ACCELERATION);
+                System.out.println(direction + " " + phys.getAcceleration());
+                decelerating = false;
+                cumDelta = 0;
+            }
+        }
     }
 
     private void updateAngle() {
-//        float angle = new Vector2(Gdx.input.getX(), Gdx.input.getY()).sub(
-//                place.getCenter()).angle();
-//        System.out.println(angle);
-//        place.setAngle(angle);
+        // float angle = new Vector2(Gdx.input.getX(), Gdx.input.getY()).sub(
+        // place.getCenter()).angle();
+        // System.out.println(angle);
+        // place.setAngle(angle);
     }
 
     private class PlayerKeyInput {
         private int     keyCode;
         private Vector2 direction;
-        private boolean isDown;
 
         public PlayerKeyInput(int keyCode, Vector2 direction) {
             this.keyCode = keyCode;
             this.direction = direction;
-            isDown = false;
         }
 
         public int getKeyCode() {
@@ -69,14 +104,6 @@ public class PlayerInputComponent extends Component {
 
         public Vector2 getDirection() {
             return direction;
-        }
-
-        public void setDown(boolean down) {
-            isDown = down;
-        }
-
-        public boolean isDown() {
-            return isDown;
         }
     }
 }
