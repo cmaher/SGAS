@@ -13,4 +13,4 @@ Since the purpose of this project is education, I will be creating a branch for 
 An empty application.  Nothing exciting about this, but it can be reused for any libgdx desktop application.
 
 ####Stage 1
-Player creation.  Includes WASD movement, rotating to face mouse, and shooting in direction of mouse.
+Player creation.  Includes Drawing, WASD movement and rotating to face mouse.
