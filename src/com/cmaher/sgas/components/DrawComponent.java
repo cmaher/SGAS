@@ -34,10 +34,7 @@ public class DrawComponent extends Component {
     }
 
     public void draw() {
-        Vector2 origin = new Vector2();
-
         sprite.setPosition(place.getX(), place.getY());
-        sprite.setOrigin(origin.x, origin.y);
         sprite.setRotation(place.getAngle());
         sprite.setRegion(textureRegion);
         sprite.setColor(tint);

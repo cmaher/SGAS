@@ -8,6 +8,9 @@ import com.cmaher.sgas.entities.Player;
 
 public class SGASGame implements ApplicationListener {
     public static final String ASSETS = "assets/"; // NOTE: "assets\" fails
+    public static final int    WIDTH  = 800;
+    public static final int    HEIGHT = 600;
+
     public AssetWrapper        assetWrapper;
     public SpriteBatch         spriteBatch;
 
@@ -43,6 +46,7 @@ public class SGASGame implements ApplicationListener {
         spriteBatch.begin();
         player.update(Gdx.graphics.getDeltaTime());
         spriteBatch.end();
+
     }
 
     @Override

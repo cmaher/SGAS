@@ -6,6 +6,7 @@ import java.util.List;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
+import com.cmaher.sgas.SGASGame;
 import com.cmaher.sgas.entities.Entity;
 
 public class PlayerInputComponent extends Component {
@@ -61,10 +62,8 @@ public class PlayerInputComponent extends Component {
     }
 
     private void updateAngle() {
-        // float angle = new Vector2(Gdx.input.getX(), Gdx.input.getY()).sub(
-        // place.getCenter()).angle();
-        // System.out.println(angle);
-        // place.setAngle(angle);
+        float angle = place.findAngle(Gdx.input.getX(), SGASGame.HEIGHT - Gdx.input.getY());
+        place.setAngle(angle);
     }
 
     private class PlayerKeyInput {

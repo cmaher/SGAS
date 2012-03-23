@@ -1,5 +1,6 @@
 package com.cmaher.sgas.components;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.cmaher.sgas.entities.Entity;
 
@@ -34,6 +35,15 @@ public class PlaceComponent extends Component {
         this.y = y;
     }
 
+    public float findAngle(float x1, float y1) {
+        Vector2 center = getCenter();
+        float x0 = center.x;
+        float y0 = center.y;
+        float a = MathUtils.atan2(y1 - y0, x1 - x0);
+        
+        return a * MathUtils.radiansToDegrees;
+    }
+    
     public float getX() {
         return x;
     }
