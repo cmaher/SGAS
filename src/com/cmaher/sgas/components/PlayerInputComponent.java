@@ -10,7 +10,6 @@ import com.cmaher.sgas.entities.Entity;
 
 public class PlayerInputComponent extends Component {
     private final List<PlayerKeyInput> PLAYER_KEYS  = new LinkedList<PlayerKeyInput>();
-    private final static Vector2       ZERO         = new Vector2(0f, 0f);
 
     private final static float         ACCELERATION = 1024;
     private final static float         DECELERATION = 1024;
@@ -18,7 +17,6 @@ public class PlayerInputComponent extends Component {
 
     private PlaceComponent             place;
     private PhysicsComponent           phys;
-    private boolean                    decelerating = false;
     private float                      cumDelta     = 0;
 
     public PlayerInputComponent(Entity master, PlaceComponent place,
@@ -27,10 +25,10 @@ public class PlayerInputComponent extends Component {
         this.place = place;
         this.phys = phys;
 
-        PLAYER_KEYS.add(new PlayerKeyInput(Input.Keys.W, new Vector2(0, 1)));
-        PLAYER_KEYS.add(new PlayerKeyInput(Input.Keys.A, new Vector2(-1, 0)));
-        PLAYER_KEYS.add(new PlayerKeyInput(Input.Keys.S, new Vector2(0, -1)));
-        PLAYER_KEYS.add(new PlayerKeyInput(Input.Keys.D, new Vector2(1, 0)));
+        PLAYER_KEYS.add(new PlayerKeyInput(Input.Keys.W, PhysicsComponent.VECTOR_UP));
+        PLAYER_KEYS.add(new PlayerKeyInput(Input.Keys.A, PhysicsComponent.VECTOR_LEFT));
+        PLAYER_KEYS.add(new PlayerKeyInput(Input.Keys.S, PhysicsComponent.VECTOR_DOWN));
+        PLAYER_KEYS.add(new PlayerKeyInput(Input.Keys.D, PhysicsComponent.VECTOR_RIGHT));
     }
 
     public void update(float delta) {
@@ -50,33 +48,13 @@ public class PlayerInputComponent extends Component {
 
         direction.nor();
         if (direction.x == 0 && direction.y == 0) {
-
-            if (decelerating) {
-                Vector2 vDir = phys.getVelocity().cpy().nor();
-                Vector2 aDir = phys.getAcceleration().cpy().nor();
-                if (((vDir.x >= 0 && aDir.x >= 0) || (vDir.x <= 0 && aDir.x <= 0))
-                        && ((vDir.y >= 0 && aDir.y >= 0) || (vDir.y <= 0 && aDir.y <= 0))) {
-                    phys.setAcceleration(ZERO);
-                    phys.setVelocity(ZERO);
-                    decelerating = false;
-                }
-            }
-
-            if (!decelerating
-                    && (phys.getAcceleration().x != 0 || phys.getAcceleration().y != 0)) {
-                phys.setAcceleration(ZERO.cpy().sub(phys.getAcceleration()),
-                        DECELERATION);
-                decelerating = true;
-            }
-
-            // stop decelerating when velocity is 0 or reversed
+            phys.setDeceleration(DECELERATION);
+            phys.processDeceleration();
         } else {
             if (cumDelta < FUZZY_DELTA) {
                 cumDelta += delta;
             } else {
-                phys.setAcceleration(direction, ACCELERATION);
-                System.out.println(direction + " " + phys.getAcceleration());
-                decelerating = false;
+                phys.setAcceleration(direction, ACCELERATION);          
                 cumDelta = 0;
             }
         }
