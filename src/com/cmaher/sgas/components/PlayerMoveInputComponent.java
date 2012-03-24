@@ -1,6 +1,6 @@
 package com.cmaher.sgas.components;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
@@ -10,7 +10,7 @@ import com.cmaher.sgas.SGASGame;
 import com.cmaher.sgas.entities.Entity;
 
 public class PlayerMoveInputComponent extends Component {
-    private final List<MoveInput> MOVE_KEYS    = new LinkedList<MoveInput>();
+    private final List<MoveInput> MOVE_KEYS    = new ArrayList<MoveInput>(4);
 
     private final static float    ACCELERATION = 1024;
     private final static float    DECELERATION = 1024;
