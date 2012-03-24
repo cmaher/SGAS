@@ -1,5 +1,6 @@
 package com.cmaher.sgas.components;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.cmaher.sgas.entities.Entity;
 
@@ -87,24 +88,22 @@ public class PhysicsComponent extends Component {
         this.deceleration = deceleration;
     }
 
-    public void setVelocityDirection(Vector2 direction) {
-        velocity = direction.nor().mul(velocity.len());
-    }
-
-    public Vector2 getVelocityDirection() {
-        return velocity.cpy().nor();
-    }
-
-    public void setAccelerationDirection(Vector2 direction) {
-        acceleration = direction.cpy().nor().mul(acceleration.len());
-    }
-
-    public Vector2 getAccelerationDirection() {
-        return acceleration.cpy().nor();
-    }
-
     public void setVelocity(Vector2 velocity) {
-        this.velocity = velocity.cpy();
+        this.velocity.x = velocity.x;
+        this.velocity.y = velocity.y;
+    }
+    
+    public void setVelocity(Vector2 direction, float magnitude) {
+        this.velocity.x = direction.x;
+        this.velocity.y = direction.y;
+        this.velocity.nor();
+        this.velocity.mul(magnitude);
+    }
+    
+    public void setVelocity(float angle, float magnitude) {
+        this.velocity.x = MathUtils.cos(angle);
+        this.velocity.y = MathUtils.sin(angle);
+        this.velocity.mul(magnitude);
     }
 
     public Vector2 getVelocity() {
@@ -112,11 +111,15 @@ public class PhysicsComponent extends Component {
     }
 
     public void setAcceleration(Vector2 acceleration) {
-        this.acceleration = acceleration.cpy();
+        this.acceleration.x = acceleration.x;
+        this.acceleration.y = acceleration.y;
     }
 
     public void setAcceleration(Vector2 direction, float magnitude) {
-        this.acceleration = direction.cpy().nor().mul(magnitude);
+        this.acceleration.x = direction.x;
+        this.acceleration.y = direction.y;
+        this.acceleration.nor();
+        this.acceleration.mul(magnitude);
     }
 
     public Vector2 getAcceleration() {
