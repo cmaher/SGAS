@@ -1,37 +1,47 @@
 package com.cmaher.sgas.entities;
+
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Vector2;
 import com.cmaher.sgas.SGASGame;
 import com.cmaher.sgas.components.DrawComponent;
 import com.cmaher.sgas.components.PhysicsComponent;
 import com.cmaher.sgas.components.PlaceComponent;
 
-
 public class StraightBullet extends Entity {
-    private static final String asset = SGASGame.ASSETS + "bullet.png";
-    
-    
-    PlaceComponent place;
-    PhysicsComponent phys;
-    DrawComponent draw;
+    private static final String BULLET         = SGASGame.ASSETS + "bullet.png";
+    private static final String BULLET_OVERLAY = SGASGame.ASSETS
+                                                       + "bullet_overlay.png";
 
-    private boolean alive = false;
+    private PlaceComponent      place;
+    private PhysicsComponent    phys;
+    private DrawComponent       bulletDraw;
+    private DrawComponent       overlayDraw;
+
+    private boolean             alive          = false;
 
     public StraightBullet(SGASGame game) {
         super(game);
         place = new PlaceComponent(this);
         phys = new PhysicsComponent(this, place);
-        draw = new DrawComponent(this, place, asset);
+        bulletDraw = new DrawComponent(this, place, BULLET);
+        bulletDraw.setTint(Color.RED);
+        overlayDraw = new DrawComponent(this, place, BULLET_OVERLAY);
     }
 
-    public void shoot(float x0, float y0, float angle, float speed) {
-        place.setPosition(x0, y0);
-        phys.setVelocity(angle, speed);
+    public void shoot(Vector2 origin, Vector2 direction, float speed) {
+        place.setPosition(origin.x, origin.y);
+        phys.setVelocity(direction, speed);
+        phys.setMaxSpeed(speed);
+        phys.setMinSpeed(speed);
+        
         alive = true;
     }
 
     public void update(float delta) {
-        if(alive) {
-            phys.update(delta);
-            draw.draw();
+        if (alive) {
+            phys.update(delta);       
+            bulletDraw.draw();
+            overlayDraw.draw();
         }
     }
 

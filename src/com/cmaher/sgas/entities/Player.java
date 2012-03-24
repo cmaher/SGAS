@@ -5,6 +5,7 @@ import com.cmaher.sgas.SGASGame;
 import com.cmaher.sgas.components.DrawComponent;
 import com.cmaher.sgas.components.PhysicsComponent;
 import com.cmaher.sgas.components.PlaceComponent;
+import com.cmaher.sgas.components.PlayerFireInputComponent;
 import com.cmaher.sgas.components.PlayerMoveInputComponent;
 
 /**
@@ -23,7 +24,9 @@ public class Player extends Entity {
     private PlaceComponent           place;
     private DrawComponent            draw;
     private PhysicsComponent         phys;
-    private PlayerMoveInputComponent input;
+    private PlayerMoveInputComponent moveInput;
+    private PlayerFireInputComponent fireInput;
+    
 
     public Player(SGASGame game) {
         super(game);
@@ -43,13 +46,16 @@ public class Player extends Entity {
 
         phys = new PhysicsComponent(this, place, MIN_SPEED, MAX_SPEED);
 
-        input = new PlayerMoveInputComponent(this, place, phys);
+        moveInput = new PlayerMoveInputComponent(this, place, phys);
+        fireInput = new PlayerFireInputComponent(this, place);
     }
 
     @Override
     public void update(float delta) {
-        input.update(delta);
-        phys.update(delta);
+        moveInput.update(delta);
         draw.draw();
+        fireInput.update(delta);
+        phys.update(delta);
+        
     }
 }

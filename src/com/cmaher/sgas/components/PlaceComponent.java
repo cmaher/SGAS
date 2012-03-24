@@ -9,8 +9,9 @@ public class PlaceComponent extends Component {
     protected float   y;
     protected int     width;
     protected int     height;
-    protected float   angle;
-    protected Vector2 origin;
+    protected float   angle; //in degrees
+    protected Vector2 origin = new Vector2();
+    protected Vector2 center = new Vector2();
 
     public PlaceComponent(Entity master) {
         super(master);
@@ -85,14 +86,17 @@ public class PlaceComponent extends Component {
     }
 
     public Vector2 getCenter() {
-        return new Vector2(x + width / 2, y + height / 2);
+        center.x = x + width / 2;
+        center.y = y + height / 2;
+        return center.cpy();
     }
 
     public Vector2 getOrigin() {
-        return origin;
+        return origin.cpy();
     }
 
-    public void setOrigin(Vector2 origin) {
-        this.origin = origin;
+    public void setOrigin(float x, float y) {
+        this.origin.x = x;
+        this.origin.y = y;
     }
 }

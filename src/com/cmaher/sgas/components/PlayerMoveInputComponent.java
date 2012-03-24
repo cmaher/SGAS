@@ -41,6 +41,7 @@ public class PlayerMoveInputComponent extends Component {
         updateAngle();
     }
 
+    //TODO: fix a bug with this function where the window losing focus keeps the key pressed down
     private void updateVelocity(float delta) {
         Vector2 direction = new Vector2();
 

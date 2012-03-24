@@ -107,7 +107,7 @@ public class PhysicsComponent extends Component {
     }
 
     public Vector2 getVelocity() {
-        return velocity;
+        return velocity.cpy();
     }
 
     public void setAcceleration(Vector2 acceleration) {
@@ -123,7 +123,7 @@ public class PhysicsComponent extends Component {
     }
 
     public Vector2 getAcceleration() {
-        return acceleration;
+        return acceleration.cpy();
     }
 
     public void setMaxSpeed(float maxSpeed) {
