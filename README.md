@@ -17,3 +17,6 @@ Player creation.  Includes WASD movement, rotating to face mouse.
 
 ####Stage 2
 Bullets and shooting.  Woo! Action.
+
+####Stage 3
+Stationary enemies and collision detection
