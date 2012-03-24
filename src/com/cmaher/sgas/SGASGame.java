@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.cmaher.sgas.collision.CollisionManager;
 import com.cmaher.sgas.entities.Player;
 
 public class SGASGame implements ApplicationListener {
@@ -13,6 +14,7 @@ public class SGASGame implements ApplicationListener {
 
     public AssetWrapper        assetWrapper;
     public SpriteBatch         spriteBatch;
+    public CollisionManager    collisions;
 
     private Player             player;
 
