@@ -4,8 +4,9 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.cmaher.sgas.collision.CollisionManager;
-import com.cmaher.sgas.entities.Player;
+import com.cmaher.game.asset.AssetWrapper;
+import com.cmaher.game.collision.CollisionManager;
+import com.cmaher.sgas.entity.Player;
 
 public class SGASGame implements ApplicationListener {
     public static final String ASSETS = "assets/"; // NOTE: "assets\" fails

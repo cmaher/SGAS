@@ -1,4 +1,4 @@
-package com.cmaher.sgas;
+package com.cmaher.game.asset;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;

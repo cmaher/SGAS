@@ -1,10 +1,12 @@
-package com.cmaher.sgas.entities;
+package com.cmaher.sgas.entity;
 
 import com.badlogic.gdx.graphics.Color;
+import com.cmaher.game.components.DrawComponent;
+import com.cmaher.game.components.PhysicsComponent;
+import com.cmaher.game.components.PlaceComponent;
+import com.cmaher.game.entity.Entity;
 import com.cmaher.sgas.SGASGame;
-import com.cmaher.sgas.components.DrawComponent;
-import com.cmaher.sgas.components.PhysicsComponent;
-import com.cmaher.sgas.components.PlaceComponent;
+import com.cmaher.sgas.components.PlayerCollisionComponent;
 import com.cmaher.sgas.components.PlayerFireInputComponent;
 import com.cmaher.sgas.components.PlayerMoveInputComponent;
 
@@ -26,7 +28,7 @@ public class Player extends Entity {
     private PhysicsComponent         phys;
     private PlayerMoveInputComponent moveInput;
     private PlayerFireInputComponent fireInput;
-    
+    private PlayerCollisionComponent collision;
 
     public Player(SGASGame game) {
         super(game);
@@ -48,6 +50,7 @@ public class Player extends Entity {
 
         moveInput = new PlayerMoveInputComponent(this, place, phys);
         fireInput = new PlayerFireInputComponent(this, place);
+        collision = new PlayerCollisionComponent(this, place);
     }
 
     @Override
@@ -55,7 +58,13 @@ public class Player extends Entity {
         moveInput.update(delta);
         draw.draw();
         fireInput.update(delta);
+        collision.update(delta);
         phys.update(delta);
-        
+
+    }
+
+    public void hitBy(Enemy enemy) {
+        enemy.hit(this);
+        draw.setTint(Color.RED);
     }
 }

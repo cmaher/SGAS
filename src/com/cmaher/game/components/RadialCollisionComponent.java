@@ -1,8 +1,8 @@
-package com.cmaher.sgas.components;
+package com.cmaher.game.components;
 
+import com.cmaher.game.collision.BoundingCircle;
+import com.cmaher.game.entity.Entity;
 import com.cmaher.sgas.SGASType;
-import com.cmaher.sgas.collision.BoundingCircle;
-import com.cmaher.sgas.entities.Entity;
 
 public class RadialCollisionComponent extends Component {
     private PlaceComponent   place;
@@ -21,13 +21,8 @@ public class RadialCollisionComponent extends Component {
         bounds.setCenter(place.getCenter());
     }
     
-    public SGASType checkCollision(RadialCollisionComponent other) {
-        SGASType collisionType = SGASType.None;
-        if(bounds.collides(other.getBounds())) {
-            collisionType = other.getType();
-        }
-        
-        return collisionType;
+    public boolean checkCollision(RadialCollisionComponent other) {
+        return bounds.collides(other.getBounds());
     }
     
     public SGASType getType() {

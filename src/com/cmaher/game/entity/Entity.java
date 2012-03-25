@@ -1,4 +1,4 @@
-package com.cmaher.sgas.entities;
+package com.cmaher.game.entity;
 
 import com.cmaher.sgas.SGASGame;
 

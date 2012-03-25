@@ -1,4 +1,4 @@
-package com.cmaher.sgas.collision;
+package com.cmaher.game.collision;
 
 import com.badlogic.gdx.math.Vector2;
 

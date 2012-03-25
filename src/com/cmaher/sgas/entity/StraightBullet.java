@@ -1,11 +1,12 @@
-package com.cmaher.sgas.entities;
+package com.cmaher.sgas.entity;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
+import com.cmaher.game.components.DrawComponent;
+import com.cmaher.game.components.PhysicsComponent;
+import com.cmaher.game.components.PlaceComponent;
+import com.cmaher.game.entity.Entity;
 import com.cmaher.sgas.SGASGame;
-import com.cmaher.sgas.components.DrawComponent;
-import com.cmaher.sgas.components.PhysicsComponent;
-import com.cmaher.sgas.components.PlaceComponent;
 
 public class StraightBullet extends Entity {
     private static final String BULLET         = SGASGame.ASSETS + "bullet.png";

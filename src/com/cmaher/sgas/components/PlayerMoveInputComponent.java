@@ -6,8 +6,11 @@ import java.util.List;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
+import com.cmaher.game.components.Component;
+import com.cmaher.game.components.PhysicsComponent;
+import com.cmaher.game.components.PlaceComponent;
+import com.cmaher.game.entity.Entity;
 import com.cmaher.sgas.SGASGame;
-import com.cmaher.sgas.entities.Entity;
 
 public class PlayerMoveInputComponent extends Component {
     private final List<MoveInput> MOVE_KEYS    = new ArrayList<MoveInput>(4);

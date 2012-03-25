@@ -8,8 +8,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.cmaher.sgas.entities.Entity;
-import com.cmaher.sgas.entities.StraightBullet;
+import com.cmaher.game.components.Component;
+import com.cmaher.game.components.PhysicsComponent;
+import com.cmaher.game.components.PlaceComponent;
+import com.cmaher.game.entity.Entity;
+import com.cmaher.sgas.entity.StraightBullet;
 
 public class PlayerFireInputComponent extends Component {
     private final static int     BUTTON_FIRE_PRIMARY      = Input.Buttons.LEFT;

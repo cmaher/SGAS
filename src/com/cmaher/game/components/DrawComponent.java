@@ -1,10 +1,10 @@
-package com.cmaher.sgas.components;
+package com.cmaher.game.components;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.cmaher.sgas.entities.Entity;
+import com.cmaher.game.entity.Entity;
 
 public class DrawComponent extends Component {
 

@@ -1,8 +1,8 @@
-package com.cmaher.sgas.components;
+package com.cmaher.game.components;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.cmaher.sgas.entities.Entity;
+import com.cmaher.game.entity.Entity;
 
 public class PhysicsComponent extends Component {
     public static final Vector2  VECTOR_UP    = new Vector2(0, 1);
