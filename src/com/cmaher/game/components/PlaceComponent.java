@@ -18,7 +18,8 @@ public class PlaceComponent extends Component {
         init(0, 0, 0, 0);
     }
 
-    public PlaceComponent(Entity master, float x, float y, float width, float height) {
+    public PlaceComponent(Entity master, float x, float y, float width,
+            float height) {
         super(master);
         init(x, y, width, height);
     }
@@ -48,6 +49,10 @@ public class PlaceComponent extends Component {
         float a = MathUtils.atan2(y1 - y0, x1 - x0);
 
         return a * MathUtils.radiansToDegrees;
+    }
+
+    public boolean inBounds(float x1, float y1, float x2, float y2) {
+        return (x >= x1 && x1 <= x2 && y >= y1 && y <= y2);
     }
 
     public float getX() {
@@ -87,7 +92,7 @@ public class PlaceComponent extends Component {
     }
 
     public void setAngle(float angle) {
-        this.angle = angle;
+        this.angle = angle % 360;
     }
 
     public Vector2 getCenter() {
@@ -104,4 +109,5 @@ public class PlaceComponent extends Component {
         this.origin.x = x;
         this.origin.y = y;
     }
+
 }

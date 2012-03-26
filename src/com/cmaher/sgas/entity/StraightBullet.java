@@ -51,6 +51,9 @@ public class StraightBullet extends Entity {
             phys.update(delta);
             bulletDraw.draw();
             overlayDraw.draw();
+            if(!place.inBounds(0, 0, SGASGame.WIDTH, SGASGame.HEIGHT)) {
+                this.kill();
+            }
         }
     }
 

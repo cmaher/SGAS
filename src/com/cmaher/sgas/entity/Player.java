@@ -75,6 +75,5 @@ public class Player extends Entity {
 
     public void hitSolid(RadialCollisionComponent rcc) {
         collision.stopAtSolid(rcc);
-        //phys.setVelocity(PhysicsComponent.ZERO);
     }
 }
