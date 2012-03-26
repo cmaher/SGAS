@@ -20,3 +20,6 @@ Bullets and shooting.  Woo! Action.
 
 ####Stage 3
 Stationary enemies and collision detection
+
+####Stage 4
+Enemies actually doing something
