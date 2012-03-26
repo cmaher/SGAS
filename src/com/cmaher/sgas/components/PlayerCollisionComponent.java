@@ -9,19 +9,21 @@ import com.cmaher.sgas.entity.Enemy;
 import com.cmaher.sgas.entity.Player;
 
 public class PlayerCollisionComponent extends RadialCollisionComponent {
-    
+
     public final Player player;
-    
+
     public PlayerCollisionComponent(Player master, PlaceComponent place) {
         super(master, place, SGASType.Player);
         this.player = master;
     }
-    
+
     public void update(float delta) {
-        Set<RadialCollisionComponent> collisions = master.game.collisions.getCollisions(this);
-        
-        for(RadialCollisionComponent collision : collisions) {
-            if(collision.getType().equals(SGASType.Enemy)) {
+        super.update(delta);
+        Set<RadialCollisionComponent> collisions = master.game.collisions
+                .getCollisions(this);
+
+        for (RadialCollisionComponent collision : collisions) {
+            if (collision.getType().equals(SGASType.Enemy)) {
                 player.hitBy((Enemy) collision.master);
             }
         }

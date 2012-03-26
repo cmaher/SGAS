@@ -17,7 +17,7 @@ public class BoundingCircle {
     }
 
     public Vector2 getCenter() {
-        return center;
+        return center.cpy();
     }
 
     public void setCenter(Vector2 center) {

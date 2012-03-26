@@ -7,9 +7,9 @@ import com.cmaher.game.entity.Entity;
 public class PlaceComponent extends Component {
     protected float   x;
     protected float   y;
-    protected int     width;
-    protected int     height;
-    protected float   angle; //in degrees
+    protected float   width;
+    protected float   height;
+    protected float   angle;                 // in degrees
     protected Vector2 origin = new Vector2();
     protected Vector2 center = new Vector2();
 
@@ -18,12 +18,12 @@ public class PlaceComponent extends Component {
         init(0, 0, 0, 0);
     }
 
-    public PlaceComponent(Entity master, float x, float y, int width, int height) {
+    public PlaceComponent(Entity master, float x, float y, float width, float height) {
         super(master);
         init(x, y, width, height);
     }
 
-    private void init(float x, float y, int width, int height) {
+    private void init(float x, float y, float width, float height) {
         this.x = x;
         this.y = y;
         this.width = width;
@@ -36,15 +36,20 @@ public class PlaceComponent extends Component {
         this.y = y;
     }
 
+    public void setPositionByCenter(Vector2 newCenter) {
+        this.x = newCenter.x - width / 2;
+        this.y = newCenter.y - height / 2;
+    }
+
     public float findAngle(float x1, float y1) {
         Vector2 center = getCenter();
         float x0 = center.x;
         float y0 = center.y;
         float a = MathUtils.atan2(y1 - y0, x1 - x0);
-        
+
         return a * MathUtils.radiansToDegrees;
     }
-    
+
     public float getX() {
         return x;
     }
@@ -61,7 +66,7 @@ public class PlaceComponent extends Component {
         this.y = y;
     }
 
-    public int getWidth() {
+    public float getWidth() {
         return width;
     }
 
@@ -69,7 +74,7 @@ public class PlaceComponent extends Component {
         this.width = width;
     }
 
-    public int getHeight() {
+    public float getHeight() {
         return height;
     }
 

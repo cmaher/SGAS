@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.cmaher.game.asset.AssetWrapper;
 import com.cmaher.game.collision.CollisionManager;
 import com.cmaher.sgas.entity.Player;
+import com.cmaher.sgas.entity.RotatingEnemy;
 
 public class SGASGame implements ApplicationListener {
     public static final String ASSETS = "assets/"; // NOTE: "assets\" fails
@@ -18,17 +19,22 @@ public class SGASGame implements ApplicationListener {
     public CollisionManager    collisions;
 
     private Player             player;
+    private RotatingEnemy      rEnemy;
 
     @Override
     public void create() {
         assetWrapper = new AssetWrapper();
         spriteBatch = new SpriteBatch();
+        collisions = new CollisionManager();
+        
         Gdx.gl.glClearColor(1f, 1f, 1f, 1f);
 
         player = new Player(this);
+        rEnemy = new RotatingEnemy(this, 200, 300, 0);
 
-        assetWrapper.addTextureAsset(Player.SPRITE);
         assetWrapper.getAssetManager().finishLoading();
+        
+        
     }
 
     @Override
@@ -45,9 +51,11 @@ public class SGASGame implements ApplicationListener {
 
     @Override
     public void render() {
+        float delta = Gdx.graphics.getDeltaTime();
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
         spriteBatch.begin();
-        player.update(Gdx.graphics.getDeltaTime());
+        player.update(delta);
+        rEnemy.update(delta);
         spriteBatch.end();
 
     }

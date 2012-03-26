@@ -23,7 +23,7 @@ public class EnemyCollisionComponent extends RadialCollisionComponent {
         
         for(RadialCollisionComponent collision : collisions) {
             if(collision.getType().equals(SGASType.Player)) {
-                enemy.hitByPlayer((Player) collision.master);
+                enemy.collidePlayer((Player) collision.master);
             }
         }
     }

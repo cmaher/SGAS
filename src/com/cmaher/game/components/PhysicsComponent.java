@@ -5,19 +5,19 @@ import com.badlogic.gdx.math.Vector2;
 import com.cmaher.game.entity.Entity;
 
 public class PhysicsComponent extends Component {
-    public static final Vector2  VECTOR_UP    = new Vector2(0, 1);
-    public static final Vector2  VECTOR_DOWN  = new Vector2(0, -1);
-    public static final Vector2  VECTOR_LEFT  = new Vector2(-1, 0);
-    public static final Vector2  VECTOR_RIGHT = new Vector2(1, 0);
-    private final static Vector2 ZERO         = new Vector2(0f, 0f);
+    public static final Vector2 VECTOR_UP    = new Vector2(0, 1);
+    public static final Vector2 VECTOR_DOWN  = new Vector2(0, -1);
+    public static final Vector2 VECTOR_LEFT  = new Vector2(-1, 0);
+    public static final Vector2 VECTOR_RIGHT = new Vector2(1, 0);
+    public final static Vector2 ZERO         = new Vector2(0f, 0f);
 
-    private PlaceComponent       place;
-    private Vector2              velocity;                          // pixels/second
-    private Vector2              acceleration;                      // pixels/second^2
-    private float                maxSpeed;
-    private float                minSpeed;
-    private boolean              decelerating = false;
-    private float                deceleration = 0f;
+    private PlaceComponent      place;
+    private Vector2             velocity;                          // pixels/second
+    private Vector2             acceleration;                      // pixels/second^2
+    private float               maxSpeed;
+    private float               minSpeed;
+    private boolean             decelerating = false;
+    private float               deceleration = 0f;
 
     public PhysicsComponent(Entity master, PlaceComponent place) {
         super(master);
@@ -53,7 +53,7 @@ public class PhysicsComponent extends Component {
         place.setPosition(place.getX() + (velocity.x * delta), place.getY()
                 + (velocity.y * delta));
     }
-    
+
     public void processDeceleration() {
         if (decelerating) {
             Vector2 vDir = velocity.cpy().nor();
@@ -71,7 +71,7 @@ public class PhysicsComponent extends Component {
             decelerating = true;
         }
     }
- 
+
     public boolean isDecelerating() {
         return decelerating;
     }
@@ -79,11 +79,11 @@ public class PhysicsComponent extends Component {
     public void setDecelerating(boolean decelerating) {
         this.decelerating = decelerating;
     }
-    
+
     public float getDeceleration() {
         return deceleration;
     }
-    
+
     public void setDeceleration(float deceleration) {
         this.deceleration = deceleration;
     }
@@ -92,14 +92,14 @@ public class PhysicsComponent extends Component {
         this.velocity.x = velocity.x;
         this.velocity.y = velocity.y;
     }
-    
+
     public void setVelocity(Vector2 direction, float magnitude) {
         this.velocity.x = direction.x;
         this.velocity.y = direction.y;
         this.velocity.nor();
         this.velocity.mul(magnitude);
     }
-    
+
     public void setVelocity(float angle, float magnitude) {
         this.velocity.x = MathUtils.cos(angle);
         this.velocity.y = MathUtils.sin(angle);

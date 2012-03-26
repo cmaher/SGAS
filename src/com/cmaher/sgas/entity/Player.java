@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.cmaher.game.components.DrawComponent;
 import com.cmaher.game.components.PhysicsComponent;
 import com.cmaher.game.components.PlaceComponent;
+import com.cmaher.game.components.RadialCollisionComponent;
 import com.cmaher.game.entity.Entity;
 import com.cmaher.sgas.SGASGame;
 import com.cmaher.sgas.components.PlayerCollisionComponent;
@@ -18,8 +19,8 @@ import com.cmaher.sgas.components.PlayerMoveInputComponent;
  * 
  */
 public class Player extends Entity {
-    public static final String       SPRITE    = SGASGame.ASSETS + "player.png";
-    private static final int         RADIUS    = 32;
+    private static final String      SPRITE    = SGASGame.ASSETS + "player.png";
+    private static final float       RADIUS    = 32;
     private static final float       MIN_SPEED = 0f;
     private static final float       MAX_SPEED = 128f;
 
@@ -35,12 +36,12 @@ public class Player extends Entity {
         init(0, 0);
     }
 
-    public Player(SGASGame game, int x, int y) {
+    public Player(SGASGame game, float x, float y) {
         super(game);
         init(x, y);
     }
 
-    private void init(int x, int y) {
+    private void init(float x, float y) {
         place = new PlaceComponent(this, x, y, RADIUS * 2, RADIUS * 2);
 
         draw = new DrawComponent(this, place, SPRITE);
@@ -51,20 +52,29 @@ public class Player extends Entity {
         moveInput = new PlayerMoveInputComponent(this, place, phys);
         fireInput = new PlayerFireInputComponent(this, place);
         collision = new PlayerCollisionComponent(this, place);
+        
+        game.assetWrapper.addTextureAsset(SPRITE);
     }
 
     @Override
     public void update(float delta) {
         moveInput.update(delta);
-        draw.draw();
         fireInput.update(delta);
-        collision.update(delta);
         phys.update(delta);
-
+        
+        draw.setTint(Color.GREEN);
+        
+        collision.update(delta);
+        draw.draw();
     }
 
     public void hitBy(Enemy enemy) {
-        enemy.hit(this);
+        enemy.collidePlayer(this);
         draw.setTint(Color.RED);
+    }
+
+    public void hitSolid(RadialCollisionComponent rcc) {
+        collision.stopAtSolid(rcc);
+        //phys.setVelocity(PhysicsComponent.ZERO);
     }
 }

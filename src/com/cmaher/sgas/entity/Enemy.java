@@ -8,7 +8,6 @@ public abstract class Enemy extends Entity {
         super(game);
     }
     
-    public abstract void hit(Player player);
-    public abstract void hitByPlayer(Player player);
-    public abstract void hitByBullet(StraightBullet bullet);
+    public abstract void collidePlayer(Player player);
+    public abstract void collidePlayerBullet(StraightBullet bullet);
 }
