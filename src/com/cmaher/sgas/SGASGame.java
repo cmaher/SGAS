@@ -68,6 +68,7 @@ public class SGASGame implements ApplicationListener, GameBase {
         player.update(delta);
         rEnemy.update(delta);
         spriteBatch.end();
+        collisionManager.clearResolvedCollisions();
 
     }
 
