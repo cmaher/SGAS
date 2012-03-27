@@ -11,15 +11,15 @@ import com.cmaher.game.entity.Entity;
 
 public class ShootBulletComponent extends Component {
 
-    private final static float   DEFAULT_BULLET_WAIT_TIME = .2f;
-    private final static float   OVERLAY_DISTANCE         = 24;
-    private final static float   OVERLAY_RADIUS           = 8;
-    private final static float   BULLET_SPEED             = 512;
+    private final static float DEFAULT_BULLET_WAIT_TIME = .2f;
+    private final static float OVERLAY_DISTANCE         = 24;
+    private final static float OVERLAY_RADIUS           = 8;
+    private final static float BULLET_SPEED             = 512;
 
-    private PlaceComponent       place;
-    private float                cumDelta                 = 0;
-    private List<Bullet> bullets;
-    private float                bulletWaitTime;
+    private PlaceComponent     place;
+    private float              cumDelta                 = 0;
+    private List<Bullet>       bullets;
+    private float              bulletWaitTime;
 
     public ShootBulletComponent(Entity master, PlaceComponent place) {
         super(master);
@@ -29,26 +29,7 @@ public class ShootBulletComponent extends Component {
 
     }
 
-    public void update(float delta, boolean fireNew) {
-        // fire a bullet
-        if (cumDelta >= bulletWaitTime && fireNew) {
-            float a = place.getAngle() * MathUtils.degreesToRadians;
-            float xOff = OVERLAY_DISTANCE * MathUtils.cos(a)
-                    - OVERLAY_RADIUS;
-            float yOff = OVERLAY_DISTANCE * MathUtils.sin(a)
-                    - OVERLAY_RADIUS;
-
-            Vector2 bulletStart = place.getCenter().add(xOff, yOff);
-
-            Vector2 bulletDirection = PhysicsComponent.VECTOR_RIGHT.cpy()
-                    .rotate(place.getAngle());
-            Bullet bullet = new Bullet(master.game);
-            bullets.add(bullet);
-            bullet.shoot(bulletStart, bulletDirection, BULLET_SPEED);
-
-            cumDelta = 0;
-        }
-
+    public void update(float delta) {
         // update bullets
         Iterator<Bullet> bulletIter = bullets.iterator();
         while (bulletIter.hasNext()) {
@@ -66,6 +47,23 @@ public class ShootBulletComponent extends Component {
         }
     }
 
+    public void fireNewBullet(float delta, Bullet newBullet) {
+        if (cumDelta >= bulletWaitTime) {
+            float a = place.getAngle() * MathUtils.degreesToRadians;
+            float xOff = OVERLAY_DISTANCE * MathUtils.cos(a) - OVERLAY_RADIUS;
+            float yOff = OVERLAY_DISTANCE * MathUtils.sin(a) - OVERLAY_RADIUS;
+
+            Vector2 bulletStart = place.getCenter().add(xOff, yOff);
+
+            Vector2 bulletDirection = PhysicsComponent.VECTOR_RIGHT.cpy()
+                    .rotate(place.getAngle());
+            bullets.add(newBullet);
+            newBullet.shoot(bulletStart, bulletDirection, BULLET_SPEED);
+
+            cumDelta = 0;
+        }
+    }
+    
     public float getBulletWaitTime() {
         return bulletWaitTime;
     }

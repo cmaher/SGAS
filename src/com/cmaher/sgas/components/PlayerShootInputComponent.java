@@ -20,7 +20,9 @@ public class PlayerShootInputComponent extends Component {
     }
     
     public void update(float delta) {
-        boolean fireNew = Gdx.input.isButtonPressed(BUTTON_FIRE_PRIMARY);
-        shoot.update(delta, fireNew);
+        if(Gdx.input.isButtonPressed(BUTTON_FIRE_PRIMARY)) {
+            shoot.fireNewBullet(delta, new PlayerBullet(master.game));
+        }
+        shoot.update(delta);
     }
 }
