@@ -28,8 +28,8 @@ public class DrawComponent extends Component {
     private void init(int srcX, int srcY, int srcWidth, int srcHeight) {
         textureRegion = new TextureRegion(texture, srcX, srcY, srcWidth,
                 srcHeight);
-        tint = Color.WHITE;
         sprite = new Sprite(textureRegion);
+        tint = Color.WHITE;
     }
 
     public void draw() {

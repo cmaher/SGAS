@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class AssetWrapper {
     private AssetManager assetManager;
+    
 
     public AssetWrapper() {
         assetManager = new AssetManager();
