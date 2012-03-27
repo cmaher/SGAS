@@ -7,6 +7,8 @@ This project makes use of libgdx [http://code.google.com/p/libgdx/](http://code.
 
 Since the purpose of this project is education, I will be creating a branch for each logical stage, so that it will be easier to follow along, and so that changes can easily be seen from stage-to stage.  I will update the readme to explain the stages as I develop them.
 
+This project also aims to provide a basic framework that builds off of LibGDX (albeit, a framework where every visible asset has circular bounds).
+
 ###Stages
 
 ####Stage 0
@@ -22,4 +24,4 @@ Bullets and shooting.  Woo! Action.
 Stationary enemies and collision detection
 
 ####Stage 4
-Enemies actually doing something
+Enemy rotating.  More importantly, refactoring code to be reusable.

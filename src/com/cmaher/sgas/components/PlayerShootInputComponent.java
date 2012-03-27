@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.cmaher.game.components.Component;
 import com.cmaher.game.components.PlaceComponent;
+import com.cmaher.game.components.ShootBulletComponent;
 import com.cmaher.game.entity.Entity;
 
 public class PlayerShootInputComponent extends Component {

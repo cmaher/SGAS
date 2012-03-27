@@ -1,4 +1,4 @@
-package com.cmaher.sgas.components;
+package com.cmaher.game.components;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -6,9 +6,6 @@ import java.util.List;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.cmaher.game.components.Component;
-import com.cmaher.game.components.PhysicsComponent;
-import com.cmaher.game.components.PlaceComponent;
 import com.cmaher.game.entity.Bullet;
 import com.cmaher.game.entity.Entity;
 
