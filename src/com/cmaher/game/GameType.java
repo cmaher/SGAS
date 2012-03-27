@@ -1,6 +1,6 @@
-package com.cmaher.sgas;
+package com.cmaher.game;
 
-public enum SGASType {
+public enum GameType {
     None,
     Player,
     Enemy,

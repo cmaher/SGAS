@@ -1,16 +1,16 @@
 package com.cmaher.game.components;
 
 import com.badlogic.gdx.math.Vector2;
+import com.cmaher.game.GameType;
 import com.cmaher.game.collision.BoundingCircle;
 import com.cmaher.game.entity.Entity;
-import com.cmaher.sgas.SGASType;
 
 public class RadialCollisionComponent extends Component {
     private PlaceComponent   place;
-    private SGASType         type;
+    private GameType         type;
     private BoundingCircle   bounds;
 
-    public RadialCollisionComponent(Entity master, PlaceComponent place, SGASType type) {
+    public RadialCollisionComponent(Entity master, PlaceComponent place, GameType type) {
         super(master);
         this.place = place;
         this.type = type;
@@ -40,11 +40,11 @@ public class RadialCollisionComponent extends Component {
         bounds.setCenter(place.getCenter());
     }
     
-    public SGASType getType() {
+    public GameType getType() {
         return type;
     }
 
-    public void setType(SGASType type) {
+    public void setType(GameType type) {
         this.type = type;
     }
 

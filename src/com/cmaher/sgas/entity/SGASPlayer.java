@@ -5,11 +5,12 @@ import com.cmaher.game.components.DrawComponent;
 import com.cmaher.game.components.PhysicsComponent;
 import com.cmaher.game.components.PlaceComponent;
 import com.cmaher.game.components.RadialCollisionComponent;
-import com.cmaher.game.entity.Entity;
+import com.cmaher.game.entity.Enemy;
+import com.cmaher.game.entity.Player;
 import com.cmaher.sgas.SGASGame;
 import com.cmaher.sgas.components.PlayerCollisionComponent;
-import com.cmaher.sgas.components.PlayerShootInputComponent;
 import com.cmaher.sgas.components.PlayerMoveInputComponent;
+import com.cmaher.sgas.components.PlayerShootInputComponent;
 
 /**
  * The class controlling the player The Player can move, rotate, shoot, and get
@@ -18,25 +19,26 @@ import com.cmaher.sgas.components.PlayerMoveInputComponent;
  * @author Christian
  * 
  */
-public class Player extends Entity {
-    private static final String      SPRITE    = SGASGame.ASSETS + "player.png";
-    private static final float       RADIUS    = 32;
-    private static final float       MIN_SPEED = 0f;
-    private static final float       MAX_SPEED = 128f;
+public class SGASPlayer extends Player {
+    private static final String       SPRITE    = SGASGame.ASSETS
+                                                        + "player.png";
+    private static final float        RADIUS    = 32;
+    private static final float        MIN_SPEED = 0f;
+    private static final float        MAX_SPEED = 128f;
 
-    private PlaceComponent           place;
-    private DrawComponent            draw;
-    private PhysicsComponent         phys;
-    private PlayerMoveInputComponent moveInput;
+    private PlaceComponent            place;
+    private DrawComponent             draw;
+    private PhysicsComponent          phys;
+    private PlayerMoveInputComponent  moveInput;
     private PlayerShootInputComponent fireInput;
-    private PlayerCollisionComponent collision;
+    private PlayerCollisionComponent  collision;
 
-    public Player(SGASGame game) {
+    public SGASPlayer(SGASGame game) {
         super(game);
         init(0, 0);
     }
 
-    public Player(SGASGame game, float x, float y) {
+    public SGASPlayer(SGASGame game, float x, float y) {
         super(game);
         init(x, y);
     }
@@ -52,7 +54,7 @@ public class Player extends Entity {
         moveInput = new PlayerMoveInputComponent(this, place, phys);
         fireInput = new PlayerShootInputComponent(this, place);
         collision = new PlayerCollisionComponent(this, place);
-        
+
         game.assetWrapper.addTextureAsset(SPRITE);
     }
 
@@ -61,14 +63,14 @@ public class Player extends Entity {
         moveInput.update(delta);
         fireInput.update(delta);
         phys.update(delta);
-        
+
         draw.setTint(Color.GREEN);
-        
+
         collision.update(delta);
         draw.draw();
     }
 
-    public void hitBy(Enemy enemy) {
+    public void collideEnemy(Enemy enemy) {
         enemy.collidePlayer(this);
         draw.setTint(Color.RED);
     }

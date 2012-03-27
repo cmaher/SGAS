@@ -1,4 +1,4 @@
-package com.cmaher.sgas.entity;
+package com.cmaher.game.entity;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.cmaher.game.components.DrawComponent;
 import com.cmaher.game.components.PhysicsComponent;
 import com.cmaher.game.components.PlaceComponent;
-import com.cmaher.game.entity.Entity;
 import com.cmaher.sgas.SGASGame;
 
 /**
@@ -15,7 +14,7 @@ import com.cmaher.sgas.SGASGame;
  * @author Christian
  * 
  */
-public class StraightBullet extends Entity {
+public class Bullet extends Entity {
     private static final String BULLET         = SGASGame.ASSETS + "bullet.png";
     private static final String BULLET_OVERLAY = SGASGame.ASSETS
                                                        + "bullet_overlay.png";
@@ -28,7 +27,7 @@ public class StraightBullet extends Entity {
 
     private boolean             alive          = false;
 
-    public StraightBullet(SGASGame game) {
+    public Bullet(SGASGame game) {
         super(game);
         place = new PlaceComponent(this);
         place.setWidth(DIAMETER);

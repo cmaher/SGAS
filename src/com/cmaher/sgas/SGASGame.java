@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.cmaher.game.asset.AssetWrapper;
 import com.cmaher.game.collision.CollisionManager;
-import com.cmaher.sgas.entity.Player;
+import com.cmaher.sgas.entity.SGASPlayer;
 import com.cmaher.sgas.entity.RotatingEnemy;
 
 public class SGASGame implements ApplicationListener {
@@ -16,7 +16,7 @@ public class SGASGame implements ApplicationListener {
     public SpriteBatch         spriteBatch;
     public CollisionManager    collisions;
 
-    private Player             player;
+    private SGASPlayer             player;
     private RotatingEnemy      rEnemy;
 
     @Override
@@ -27,7 +27,7 @@ public class SGASGame implements ApplicationListener {
         
         Gdx.gl.glClearColor(1f, 1f, 1f, 1f);
 
-        player = new Player(this);
+        player = new SGASPlayer(this);
         rEnemy = new RotatingEnemy(this, 200, 300, 0);
 
         assetWrapper.getAssetManager().finishLoading();

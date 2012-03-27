@@ -2,18 +2,18 @@ package com.cmaher.sgas.components;
 
 import java.util.Set;
 
+import com.cmaher.game.GameType;
 import com.cmaher.game.components.PlaceComponent;
 import com.cmaher.game.components.RadialCollisionComponent;
-import com.cmaher.sgas.SGASType;
-import com.cmaher.sgas.entity.Enemy;
-import com.cmaher.sgas.entity.Player;
+import com.cmaher.game.entity.Enemy;
+import com.cmaher.sgas.entity.SGASPlayer;
 
 public class PlayerCollisionComponent extends RadialCollisionComponent {
 
-    public final Player player;
+    public final SGASPlayer player;
 
-    public PlayerCollisionComponent(Player master, PlaceComponent place) {
-        super(master, place, SGASType.Player);
+    public PlayerCollisionComponent(SGASPlayer master, PlaceComponent place) {
+        super(master, place, GameType.Player);
         this.player = master;
     }
 
@@ -23,8 +23,8 @@ public class PlayerCollisionComponent extends RadialCollisionComponent {
                 .getCollisions(this);
 
         for (RadialCollisionComponent collision : collisions) {
-            if (collision.getType().equals(SGASType.Enemy)) {
-                player.hitBy((Enemy) collision.master);
+            if (collision.getType().equals(GameType.Enemy)) {
+                player.collideEnemy((Enemy) collision.master);
             }
         }
     }

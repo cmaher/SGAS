@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.cmaher.game.components.DrawComponent;
 import com.cmaher.game.components.PlaceComponent;
 import com.cmaher.game.components.RotationalComponent;
+import com.cmaher.game.entity.Bullet;
+import com.cmaher.game.entity.Enemy;
 import com.cmaher.sgas.SGASGame;
 import com.cmaher.sgas.components.EnemyCollisionComponent;
 
@@ -40,7 +42,7 @@ public class RotatingEnemy extends Enemy {
         game.assetWrapper.addTextureAsset(SPRITE);
     }
 
-    public void collidePlayer(Player player) {
+    public void collidePlayer(SGASPlayer player) {
         player.hitSolid(collision);
 
     }
@@ -51,7 +53,7 @@ public class RotatingEnemy extends Enemy {
     }
 
     @Override
-    public void collidePlayerBullet(StraightBullet bullet) {
+    public void collidePlayerBullet(Bullet bullet) {
         // TODO Auto-generated method stub
 
     }

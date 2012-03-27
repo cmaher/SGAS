@@ -9,8 +9,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.cmaher.game.components.Component;
 import com.cmaher.game.components.PhysicsComponent;
 import com.cmaher.game.components.PlaceComponent;
+import com.cmaher.game.entity.Bullet;
 import com.cmaher.game.entity.Entity;
-import com.cmaher.sgas.entity.StraightBullet;
 
 public class ShootBulletComponent extends Component {
 
@@ -21,13 +21,13 @@ public class ShootBulletComponent extends Component {
 
     private PlaceComponent       place;
     private float                cumDelta                 = 0;
-    private List<StraightBullet> bullets;
+    private List<Bullet> bullets;
     private float                bulletWaitTime;
 
     public ShootBulletComponent(Entity master, PlaceComponent place) {
         super(master);
         this.place = place;
-        bullets = new LinkedList<StraightBullet>();
+        bullets = new LinkedList<Bullet>();
         bulletWaitTime = DEFAULT_BULLET_WAIT_TIME;
 
     }
@@ -45,7 +45,7 @@ public class ShootBulletComponent extends Component {
 
             Vector2 bulletDirection = PhysicsComponent.VECTOR_RIGHT.cpy()
                     .rotate(place.getAngle());
-            StraightBullet bullet = new StraightBullet(master.game);
+            Bullet bullet = new Bullet(master.game);
             bullets.add(bullet);
             bullet.shoot(bulletStart, bulletDirection, BULLET_SPEED);
 
@@ -53,9 +53,9 @@ public class ShootBulletComponent extends Component {
         }
 
         // update bullets
-        Iterator<StraightBullet> bulletIter = bullets.iterator();
+        Iterator<Bullet> bulletIter = bullets.iterator();
         while (bulletIter.hasNext()) {
-            StraightBullet sb = bulletIter.next();
+            Bullet sb = bulletIter.next();
             sb.update(delta);
             if (!sb.isAlive()) {
                 bulletIter.remove();
