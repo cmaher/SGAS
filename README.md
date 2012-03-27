@@ -27,4 +27,4 @@ Stationary enemies and collision detection
 Enemy rotating.  More importantly, refactoring code to be reusable.
 
 ####Stage 5
-Enemy firing (at intervals).  Bullet typeof(EnemyBullet|PlayerBullet) Player-bullet collisions. Enemy-bullet collisions.
+Enemy firing (at intervals).  Bullet typeof(EnemyBullet|PlayerBullet) Player-bullet collisions. Enemy-bullet collisions.  Also has a significant amount of refactoring to handle things with interfaces instead of just class derivation.
