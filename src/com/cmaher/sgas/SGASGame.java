@@ -11,8 +11,6 @@ import com.cmaher.sgas.entity.RotatingEnemy;
 
 public class SGASGame implements ApplicationListener {
     public static final String ASSETS = "assets/"; // NOTE: "assets\" fails
-    public static final int    WIDTH  = 800;
-    public static final int    HEIGHT = 600;
 
     public AssetWrapper        assetWrapper;
     public SpriteBatch         spriteBatch;

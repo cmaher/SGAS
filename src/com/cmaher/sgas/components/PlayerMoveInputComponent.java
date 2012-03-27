@@ -10,7 +10,6 @@ import com.cmaher.game.components.Component;
 import com.cmaher.game.components.PhysicsComponent;
 import com.cmaher.game.components.PlaceComponent;
 import com.cmaher.game.entity.Entity;
-import com.cmaher.sgas.SGASGame;
 
 public class PlayerMoveInputComponent extends Component {
     private final List<MoveInput> MOVE_KEYS    = new ArrayList<MoveInput>(4);
@@ -44,7 +43,8 @@ public class PlayerMoveInputComponent extends Component {
         updateAngle();
     }
 
-    //TODO: fix a bug with this function where the window losing focus keeps the key pressed down
+    // TODO: fix a bug with this function where the window losing focus keeps
+    // the key pressed down
     private void updateVelocity(float delta) {
         Vector2 direction = new Vector2();
 
@@ -70,8 +70,8 @@ public class PlayerMoveInputComponent extends Component {
     }
 
     private void updateAngle() {
-        float angle = place.findAngle(Gdx.input.getX(), SGASGame.HEIGHT
-                - Gdx.input.getY());
+        float angle = place.findAngle(Gdx.input.getX(),
+                Gdx.graphics.getHeight() - Gdx.input.getY());
         place.setAngle(angle);
     }
 

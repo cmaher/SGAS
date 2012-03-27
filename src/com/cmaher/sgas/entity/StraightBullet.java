@@ -1,5 +1,6 @@
 package com.cmaher.sgas.entity;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.cmaher.game.components.DrawComponent;
@@ -10,8 +11,9 @@ import com.cmaher.sgas.SGASGame;
 
 /**
  * TODO: In Order to make this truly generic, import assets from config
+ * 
  * @author Christian
- *
+ * 
  */
 public class StraightBullet extends Entity {
     private static final String BULLET         = SGASGame.ASSETS + "bullet.png";
@@ -51,7 +53,8 @@ public class StraightBullet extends Entity {
             phys.update(delta);
             bulletDraw.draw();
             overlayDraw.draw();
-            if(!place.inBounds(0, 0, SGASGame.WIDTH, SGASGame.HEIGHT)) {
+            if (!place.inBounds(0, 0, Gdx.graphics.getWidth(),
+                    Gdx.graphics.getHeight())) {
                 this.kill();
             }
         }
