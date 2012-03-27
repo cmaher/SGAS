@@ -4,17 +4,30 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.cmaher.game.GameBase;
 import com.cmaher.game.asset.AssetWrapper;
 import com.cmaher.game.collision.CollisionManager;
-import com.cmaher.sgas.entity.SGASPlayer;
 import com.cmaher.sgas.entity.RotatingEnemy;
+import com.cmaher.sgas.entity.SGASPlayer;
 
-public class SGASGame implements ApplicationListener {
+public class SGASGame implements ApplicationListener, GameBase {
     public static final String ASSETS = "assets/"; // NOTE: "assets\" fails
 
     public AssetWrapper        assetWrapper;
     public SpriteBatch         spriteBatch;
-    public CollisionManager    collisions;
+    public CollisionManager    collisionManager;
+
+    public AssetWrapper getAssetWrapper() {
+        return assetWrapper;
+    }
+
+    public SpriteBatch getSpriteBatch() {
+        return spriteBatch;
+    }
+
+    public CollisionManager getCollisionManager() {
+        return collisionManager;
+    }
 
     private SGASPlayer             player;
     private RotatingEnemy      rEnemy;
@@ -23,7 +36,7 @@ public class SGASGame implements ApplicationListener {
     public void create() {
         assetWrapper = new AssetWrapper();
         spriteBatch = new SpriteBatch();
-        collisions = new CollisionManager();
+        collisionManager = new CollisionManager();
         
         Gdx.gl.glClearColor(1f, 1f, 1f, 1f);
 

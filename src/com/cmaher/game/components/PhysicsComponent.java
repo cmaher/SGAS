@@ -2,7 +2,7 @@ package com.cmaher.game.components;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.cmaher.game.entity.Entity;
+import com.cmaher.game.entity.EntityBase;
 
 public class PhysicsComponent extends Component {
     public static final Vector2 VECTOR_UP    = new Vector2(0, 1);
@@ -19,13 +19,13 @@ public class PhysicsComponent extends Component {
     private boolean             decelerating = false;
     private float               deceleration = 0f;
 
-    public PhysicsComponent(Entity master, PlaceComponent place) {
+    public PhysicsComponent(EntityBase master, PlaceComponent place) {
         super(master);
         this.place = place;
         init(0f, 0f);
     }
 
-    public PhysicsComponent(Entity master, PlaceComponent place,
+    public PhysicsComponent(EntityBase master, PlaceComponent place,
             float minSpeed, float maxSpeed) {
         super(master);
         this.place = place;

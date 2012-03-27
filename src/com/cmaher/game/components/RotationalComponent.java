@@ -1,6 +1,6 @@
 package com.cmaher.game.components;
 
-import com.cmaher.game.entity.Entity;
+import com.cmaher.game.entity.EntityBase;
 
 public class RotationalComponent extends Component {
 
@@ -8,7 +8,7 @@ public class RotationalComponent extends Component {
     private float angularVelocity; // degrees/second
     
     
-    public RotationalComponent(Entity master, PlaceComponent place, float angularVelocity) {
+    public RotationalComponent(EntityBase master, PlaceComponent place, float angularVelocity) {
         super(master);
         this.place = place;
         this.angularVelocity = angularVelocity;

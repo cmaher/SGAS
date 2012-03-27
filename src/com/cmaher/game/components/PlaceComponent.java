@@ -2,7 +2,7 @@ package com.cmaher.game.components;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.cmaher.game.entity.Entity;
+import com.cmaher.game.entity.EntityBase;
 
 public class PlaceComponent extends Component {
     protected float   x;
@@ -13,12 +13,12 @@ public class PlaceComponent extends Component {
     protected Vector2 origin = new Vector2();
     protected Vector2 center = new Vector2();
 
-    public PlaceComponent(Entity master) {
+    public PlaceComponent(EntityBase master) {
         super(master);
         init(0, 0, 0, 0);
     }
 
-    public PlaceComponent(Entity master, float x, float y, float width,
+    public PlaceComponent(EntityBase master, float x, float y, float width,
             float height) {
         super(master);
         init(x, y, width, height);

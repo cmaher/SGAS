@@ -3,6 +3,7 @@ package com.cmaher.game.entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
+import com.cmaher.game.GameBase;
 import com.cmaher.game.components.DrawComponent;
 import com.cmaher.game.components.PhysicsComponent;
 import com.cmaher.game.components.PlaceComponent;
@@ -14,20 +15,20 @@ import com.cmaher.sgas.SGASGame;
  * @author Christian
  * 
  */
-public class Bullet extends Entity {
-    private static final String BULLET         = SGASGame.ASSETS + "bullet.png";
-    private static final String BULLET_OVERLAY = SGASGame.ASSETS
+public class Bullet extends EntityBase {
+    protected static final String BULLET         = SGASGame.ASSETS + "bullet.png";
+    protected static final String BULLET_OVERLAY = SGASGame.ASSETS
                                                        + "bullet_overlay.png";
-    private static final int    DIAMETER       = 16;
+    protected static final int    DIAMETER       = 16;
 
-    private PlaceComponent      place;
-    private PhysicsComponent    phys;
-    private DrawComponent       bulletDraw;
-    private DrawComponent       overlayDraw;
+    protected PlaceComponent      place;
+    protected PhysicsComponent    phys;
+    protected DrawComponent       bulletDraw;
+    protected DrawComponent       overlayDraw;
 
     private boolean             alive          = false;
 
-    public Bullet(SGASGame game) {
+    public Bullet(GameBase game) {
         super(game);
         place = new PlaceComponent(this);
         place.setWidth(DIAMETER);

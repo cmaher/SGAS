@@ -1,6 +1,6 @@
 package com.cmaher.game;
 
-public enum GameType {
+public enum FactionType {
     None,
     Player,
     Enemy,

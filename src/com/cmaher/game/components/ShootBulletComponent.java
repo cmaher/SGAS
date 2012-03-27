@@ -7,7 +7,7 @@ import java.util.List;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.cmaher.game.entity.Bullet;
-import com.cmaher.game.entity.Entity;
+import com.cmaher.game.entity.EntityBase;
 
 public class ShootBulletComponent extends Component {
 
@@ -21,7 +21,7 @@ public class ShootBulletComponent extends Component {
     private List<Bullet>       bullets;
     private float              bulletWaitTime;
 
-    public ShootBulletComponent(Entity master, PlaceComponent place) {
+    public ShootBulletComponent(EntityBase master, PlaceComponent place) {
         super(master);
         this.place = place;
         bullets = new LinkedList<Bullet>();

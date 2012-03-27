@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.cmaher.game.components.Component;
 import com.cmaher.game.components.PhysicsComponent;
 import com.cmaher.game.components.PlaceComponent;
-import com.cmaher.game.entity.Entity;
+import com.cmaher.game.entity.EntityBase;
 
 public class PlayerMoveInputComponent extends Component {
     private final List<MoveInput> MOVE_KEYS    = new ArrayList<MoveInput>(4);
@@ -26,7 +26,7 @@ public class PlayerMoveInputComponent extends Component {
     private PhysicsComponent      phys;
     private float                 cumDelta     = 0;
 
-    public PlayerMoveInputComponent(Entity master, PlaceComponent place,
+    public PlayerMoveInputComponent(EntityBase master, PlaceComponent place,
             PhysicsComponent phys) {
         super(master);
         this.place = place;

@@ -20,7 +20,7 @@ public class DrawComponent extends Component {
         this.place = place;
         this.assetStr = assetStr;
 
-        texture = master.game.assetWrapper.getTexture(assetStr);
+        texture = master.getGame().getAssetWrapper().getTexture(assetStr);
 
         init(0, 0, texture.getWidth(), texture.getHeight());
     }
@@ -37,7 +37,7 @@ public class DrawComponent extends Component {
         sprite.setRotation(place.getAngle());
         sprite.setRegion(textureRegion);
         sprite.setColor(tint);
-        sprite.draw(master.game.spriteBatch);
+        sprite.draw(master.getGame().getSpriteBatch());
     }
 
     public Texture getTexture() {

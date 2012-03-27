@@ -1,14 +1,16 @@
 package com.cmaher.sgas.entity;
 
 import com.badlogic.gdx.graphics.Color;
+import com.cmaher.game.FactionType;
+import com.cmaher.game.GameBase;
 import com.cmaher.game.components.DrawComponent;
+import com.cmaher.game.components.FactionableCollisionComponent;
 import com.cmaher.game.components.PhysicsComponent;
 import com.cmaher.game.components.PlaceComponent;
 import com.cmaher.game.components.RadialCollisionComponent;
-import com.cmaher.game.entity.Enemy;
-import com.cmaher.game.entity.Player;
+import com.cmaher.game.entity.EntityBase;
+import com.cmaher.game.entity.Factionable;
 import com.cmaher.sgas.SGASGame;
-import com.cmaher.sgas.components.PlayerCollisionComponent;
 import com.cmaher.sgas.components.PlayerMoveInputComponent;
 import com.cmaher.sgas.components.PlayerShootInputComponent;
 
@@ -19,26 +21,26 @@ import com.cmaher.sgas.components.PlayerShootInputComponent;
  * @author Christian
  * 
  */
-public class SGASPlayer extends Player {
-    private static final String       SPRITE    = SGASGame.ASSETS
-                                                        + "player.png";
-    private static final float        RADIUS    = 32;
-    private static final float        MIN_SPEED = 0f;
-    private static final float        MAX_SPEED = 128f;
+public class SGASPlayer extends EntityBase implements Factionable {
+    private static final String           SPRITE    = SGASGame.ASSETS
+                                                            + "player.png";
+    private static final float            RADIUS    = 32;
+    private static final float            MIN_SPEED = 0f;
+    private static final float            MAX_SPEED = 128f;
 
-    private PlaceComponent            place;
-    private DrawComponent             draw;
-    private PhysicsComponent          phys;
-    private PlayerMoveInputComponent  moveInput;
-    private PlayerShootInputComponent fireInput;
-    private PlayerCollisionComponent  collision;
+    private PlaceComponent                place;
+    private DrawComponent                 draw;
+    private PhysicsComponent              phys;
+    private PlayerMoveInputComponent      moveInput;
+    private PlayerShootInputComponent     fireInput;
+    private FactionableCollisionComponent collision;
 
-    public SGASPlayer(SGASGame game) {
+    public SGASPlayer(GameBase game) {
         super(game);
         init(0, 0);
     }
 
-    public SGASPlayer(SGASGame game, float x, float y) {
+    public SGASPlayer(GameBase game, float x, float y) {
         super(game);
         init(x, y);
     }
@@ -53,9 +55,10 @@ public class SGASPlayer extends Player {
 
         moveInput = new PlayerMoveInputComponent(this, place, phys);
         fireInput = new PlayerShootInputComponent(this, place);
-        collision = new PlayerCollisionComponent(this, place);
+        collision = new FactionableCollisionComponent(this, place,
+                FactionType.Player, FactionType.Enemy, FactionType.EnemyBullet);
 
-        game.assetWrapper.addTextureAsset(SPRITE);
+        game.getAssetWrapper().addTextureAsset(SPRITE);
     }
 
     @Override
@@ -70,12 +73,18 @@ public class SGASPlayer extends Player {
         draw.draw();
     }
 
-    public void collideEnemy(Enemy enemy) {
-        enemy.collidePlayer(this);
+    public void collideUnfriendly(Factionable uf) {
+        uf.collideUnfriendly(this);
         draw.setTint(Color.RED);
     }
 
-    public void hitSolid(RadialCollisionComponent rcc) {
+    @Override
+    public void collideUnfriendlyBullet(Factionable ufBullet) {
+        // TODO Auto-generated method stub
+
+    }
+
+    public void collideSolid(RadialCollisionComponent rcc) {
         collision.stopAtSolid(rcc);
     }
 }
