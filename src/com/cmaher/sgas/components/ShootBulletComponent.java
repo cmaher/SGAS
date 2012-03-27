@@ -4,8 +4,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.cmaher.game.components.Component;
@@ -14,8 +12,8 @@ import com.cmaher.game.components.PlaceComponent;
 import com.cmaher.game.entity.Entity;
 import com.cmaher.sgas.entity.StraightBullet;
 
-public class PlayerFireInputComponent extends Component {
-    private final static int     BUTTON_FIRE_PRIMARY      = Input.Buttons.LEFT;
+public class ShootBulletComponent extends Component {
+
     private final static float   DEFAULT_BULLET_WAIT_TIME = .2f;
     private final static float   OVERLAY_DISTANCE         = 24;
     private final static float   OVERLAY_RADIUS           = 8;
@@ -26,35 +24,32 @@ public class PlayerFireInputComponent extends Component {
     private List<StraightBullet> bullets;
     private float                bulletWaitTime;
 
-    // use pool of bullets
-    public PlayerFireInputComponent(Entity master, PlaceComponent place) {
+    public ShootBulletComponent(Entity master, PlaceComponent place) {
         super(master);
         this.place = place;
         bullets = new LinkedList<StraightBullet>();
         bulletWaitTime = DEFAULT_BULLET_WAIT_TIME;
+
     }
 
-    public void update(float delta) {
+    public void update(float delta, boolean fireNew) {
         // fire a bullet
-        if (cumDelta >= bulletWaitTime) {
-            if (Gdx.input.isButtonPressed(BUTTON_FIRE_PRIMARY)) {
+        if (cumDelta >= bulletWaitTime && fireNew) {
+            float a = place.getAngle() * MathUtils.degreesToRadians;
+            float xOff = OVERLAY_DISTANCE * MathUtils.cos(a)
+                    - OVERLAY_RADIUS;
+            float yOff = OVERLAY_DISTANCE * MathUtils.sin(a)
+                    - OVERLAY_RADIUS;
 
-                float a = place.getAngle() * MathUtils.degreesToRadians;
-                float xOff = OVERLAY_DISTANCE * MathUtils.cos(a)
-                        - OVERLAY_RADIUS;
-                float yOff = OVERLAY_DISTANCE * MathUtils.sin(a)
-                        - OVERLAY_RADIUS;
+            Vector2 bulletStart = place.getCenter().add(xOff, yOff);
 
-                Vector2 bulletStart = place.getCenter().add(xOff, yOff);
+            Vector2 bulletDirection = PhysicsComponent.VECTOR_RIGHT.cpy()
+                    .rotate(place.getAngle());
+            StraightBullet bullet = new StraightBullet(master.game);
+            bullets.add(bullet);
+            bullet.shoot(bulletStart, bulletDirection, BULLET_SPEED);
 
-                Vector2 bulletDirection = PhysicsComponent.VECTOR_RIGHT.cpy()
-                        .rotate(place.getAngle());
-                StraightBullet bullet = new StraightBullet(master.game);
-                bullets.add(bullet);
-                bullet.shoot(bulletStart, bulletDirection, BULLET_SPEED);
-
-                cumDelta = 0;
-            }
+            cumDelta = 0;
         }
 
         // update bullets

@@ -8,7 +8,7 @@ import com.cmaher.game.components.RadialCollisionComponent;
 import com.cmaher.game.entity.Entity;
 import com.cmaher.sgas.SGASGame;
 import com.cmaher.sgas.components.PlayerCollisionComponent;
-import com.cmaher.sgas.components.PlayerFireInputComponent;
+import com.cmaher.sgas.components.PlayerShootInputComponent;
 import com.cmaher.sgas.components.PlayerMoveInputComponent;
 
 /**
@@ -28,7 +28,7 @@ public class Player extends Entity {
     private DrawComponent            draw;
     private PhysicsComponent         phys;
     private PlayerMoveInputComponent moveInput;
-    private PlayerFireInputComponent fireInput;
+    private PlayerShootInputComponent fireInput;
     private PlayerCollisionComponent collision;
 
     public Player(SGASGame game) {
@@ -50,7 +50,7 @@ public class Player extends Entity {
         phys = new PhysicsComponent(this, place, MIN_SPEED, MAX_SPEED);
 
         moveInput = new PlayerMoveInputComponent(this, place, phys);
-        fireInput = new PlayerFireInputComponent(this, place);
+        fireInput = new PlayerShootInputComponent(this, place);
         collision = new PlayerCollisionComponent(this, place);
         
         game.assetWrapper.addTextureAsset(SPRITE);
