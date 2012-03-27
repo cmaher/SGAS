@@ -28,8 +28,11 @@ public class FactionableCollisionComponent extends RadialCollisionComponent {
         for (RadialCollisionComponent collision : collisions) {
             if (collision.getType().equals(unfriendly)) {
                 fEntity.collideUnfriendly((Factionable) collision.master);
-            } else if (collision.getType().equals(unfriendlyBullet)) {
+                master.getGame().getCollisionManager().setResolved(this, collision);
+            } 
+            else if (collision.getType().equals(unfriendlyBullet)) {
                 fEntity.collideUnfriendlyBullet((Factionable) collision.master);
+                master.getGame().getCollisionManager().setResolved(this, collision);
             }
         }
     }

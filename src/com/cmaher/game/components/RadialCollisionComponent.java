@@ -6,9 +6,12 @@ import com.cmaher.game.collision.BoundingCircle;
 import com.cmaher.game.entity.Factionable;
 
 public class RadialCollisionComponent extends Component {
+    private static long    nextId = 0;
+
     private PlaceComponent place;
     private FactionType    type;
     private BoundingCircle bounds;
+    private long           id;
 
     public RadialCollisionComponent(Factionable master, PlaceComponent place,
             FactionType type) {
@@ -17,6 +20,8 @@ public class RadialCollisionComponent extends Component {
         this.type = type;
         bounds = new BoundingCircle(place.getCenter(), place.getWidth() / 2);
         master.getGame().getCollisionManager().add(this);
+        
+        this.id = nextId++;
     }
 
     public void update(float delta) {
@@ -55,8 +60,12 @@ public class RadialCollisionComponent extends Component {
     public void setBounds(BoundingCircle bounds) {
         this.bounds = bounds;
     }
-    
+
     public Factionable getFactionable() {
         return (Factionable) master;
+    }
+    
+    public long getId() {
+        return id;
     }
 }
