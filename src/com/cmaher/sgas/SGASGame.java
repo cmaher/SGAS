@@ -1,6 +1,5 @@
 package com.cmaher.sgas;
 
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -10,24 +9,13 @@ import com.cmaher.game.collision.CollisionManager;
 import com.cmaher.sgas.entity.RotatingEnemy;
 import com.cmaher.sgas.entity.SGASPlayer;
 
-public class SGASGame implements ApplicationListener, GameBase {
+public class SGASGame implements GameBase {
     public static final String ASSETS = "assets/"; // NOTE: "assets\" fails
 
-    public AssetWrapper        assetWrapper;
-    public SpriteBatch         spriteBatch;
-    public CollisionManager    collisionManager;
+    private AssetWrapper        assetWrapper;
+    private SpriteBatch         spriteBatch;
+    private CollisionManager    collisionManager;
 
-    public AssetWrapper getAssetWrapper() {
-        return assetWrapper;
-    }
-
-    public SpriteBatch getSpriteBatch() {
-        return spriteBatch;
-    }
-
-    public CollisionManager getCollisionManager() {
-        return collisionManager;
-    }
 
     private SGASPlayer             player;
     private RotatingEnemy      rEnemy;
@@ -82,6 +70,18 @@ public class SGASGame implements ApplicationListener, GameBase {
     public void resume() {
         // TODO Auto-generated method stub
 
+    }
+    
+    public AssetWrapper getAssetWrapper() {
+        return assetWrapper;
+    }
+
+    public SpriteBatch getSpriteBatch() {
+        return spriteBatch;
+    }
+
+    public CollisionManager getCollisionManager() {
+        return collisionManager;
     }
 
 }
