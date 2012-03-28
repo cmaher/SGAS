@@ -7,7 +7,7 @@ This project makes use of libgdx [http://code.google.com/p/libgdx/](http://code.
 
 Since the purpose of this project is education, I will be creating a branch for each logical stage, so that it will be easier to follow along, and so that changes can easily be seen from stage-to stage.  I will update the readme to explain the stages as I develop them.
 
-This project also aims to provide a basic framework that builds off of LibGDX (albeit, a framework where every visible asset has circular bounds).
+This project also aims to provide a basic engine that builds off of the framework provided by LibGDX (albeit, an engine where every visible asset has circular bounds).
 
 
 ###Stages

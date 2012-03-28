@@ -25,9 +25,9 @@ public class RotatingEnemy extends EntityBase implements Factionable {
 
     private static final float            DEACTIVE_TIME        = 1.5f;
 
-    private static final float            DEFAULT_SHOOT_WAIT   = 1.2f;
-    private static final float            DEFAULT_BULLET_SPEED = 256f;
-    private static final float            SHOOT_RATE_CHANGE    = -.05f;
+    private static final float            DEFAULT_SHOOT_WAIT   = 0f;
+    private static final float            DEFAULT_BULLET_SPEED = 128;
+    private static final float            SHOOT_RATE_CHANGE    = -.1f;
     private static final float            ANGLE_RATE_CHANGE    = 4f;
     private static final int              SCORE_UPDATE         = 10;
 
@@ -43,6 +43,12 @@ public class RotatingEnemy extends EntityBase implements Factionable {
         super(game);
         this.sgasg = game;
         init(0f, 0f, 0f);
+    }
+
+    public RotatingEnemy(SGASGame game, float x, float y) {
+        super(game);
+        this.sgasg = game;
+        init(x, y, 0f);
     }
 
     public RotatingEnemy(SGASGame game, float x, float y, float angle) {
@@ -73,6 +79,7 @@ public class RotatingEnemy extends EntityBase implements Factionable {
         deactivate.update(delta);
         if (!deactivate.isDeactivated()) {
             rotational.update(delta);
+            shoot.update(delta);
             shoot.fireNewBullet(new EnemyBullet(game));
 
             draw.setTint(Color.BLUE);
@@ -110,7 +117,9 @@ public class RotatingEnemy extends EntityBase implements Factionable {
 
     }
 
-    public void randomizeShootWait(float low, float high) {
-        shoot.setBulletWaitTime(MathUtils.random(low, high));
+    public void randomize(float lowShoot, float highShoot) {
+        shoot.setBulletWaitTime(MathUtils.random(lowShoot, highShoot));
+        place.setAngle(MathUtils.random(0f, 360f));
+        rotational.setReversed(MathUtils.randomBoolean());
     }
 }

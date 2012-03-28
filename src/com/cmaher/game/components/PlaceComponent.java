@@ -1,5 +1,6 @@
 package com.cmaher.game.components;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.cmaher.game.entity.EntityBase;
@@ -53,6 +54,21 @@ public class PlaceComponent extends Component {
 
     public boolean inBounds(float x1, float y1, float x2, float y2) {
         return (x >= x1 && x1 <= x2 && y >= y1 && y <= y2);
+    }
+    
+    public void moveToScreenBounds() {
+        if(x < 0) {
+            x = 0;
+        }
+        if(x + width >= Gdx.graphics.getWidth()) {
+            x = Gdx.graphics.getWidth() - width;
+        }
+        if(y < 0) {
+            y = 0;
+        }
+        if(y + height >= Gdx.graphics.getHeight()) {
+            y = Gdx.graphics.getHeight() - height;
+        }        
     }
 
     public float getX() {

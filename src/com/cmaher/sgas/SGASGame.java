@@ -6,10 +6,10 @@ import java.util.List;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.MathUtils;
 import com.cmaher.game.GameBase;
 import com.cmaher.game.asset.AssetWrapper;
 import com.cmaher.game.collision.CollisionManager;
+import com.cmaher.game.entity.Text;
 import com.cmaher.sgas.entity.RotatingEnemy;
 import com.cmaher.sgas.entity.SGASPlayer;
 
@@ -24,7 +24,9 @@ public class SGASGame implements GameBase {
 
     private SGASPlayer          player;
     private List<RotatingEnemy> enemies;
+    private Text                text;
     private int                 score      = 0;
+    private int                 topScore   = 0;
 
     @Override
     public void create() {
@@ -32,11 +34,12 @@ public class SGASGame implements GameBase {
         spriteBatch = new SpriteBatch();
         collisionManager = new CollisionManager();
 
-        Gdx.gl.glClearColor(1f, 1f, 1f, 1f);
+        Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
 
         player = new SGASPlayer(this, Gdx.graphics.getWidth() / 2,
                 Gdx.graphics.getHeight() / 2);
         createEnemies();
+        text = new Text(this, 0, 20);
 
         assetWrapper.getAssetManager().finishLoading();
 
@@ -47,30 +50,30 @@ public class SGASGame implements GameBase {
         enemies = new ArrayList<RotatingEnemy>();
 
         // top and bottom enemies
-        for (int i = 0; i < 6; i ++) {
-            RotatingEnemy eBottom = new RotatingEnemy(this, 4 * i * diameter, 0,
-                    MathUtils.random(360));
-            RotatingEnemy eTop = new RotatingEnemy(this, 4 * i * diameter,
-                    Gdx.graphics.getHeight() - diameter, MathUtils.random(360));
+        for (int i = 0; i < 6; i++) {
+            float x = 2.88f * i * diameter;
+
+            RotatingEnemy eBottom = new RotatingEnemy(this, x, 0);
+            RotatingEnemy eTop = new RotatingEnemy(this, x,
+                    Gdx.graphics.getHeight() - diameter);
 
             enemies.add(eBottom);
             enemies.add(eTop);
         }
 
         // side enemies
-        for (int i = 1; i < 4; i ++) {
-            RotatingEnemy eLeft = new RotatingEnemy(this, 0, 3* i * diameter,
-                    MathUtils.random(360));
+        for (int i = 1; i < 3; i++) {
+            float y = 3 * i * diameter;
+            RotatingEnemy eLeft = new RotatingEnemy(this, 0, y);
             RotatingEnemy eRight = new RotatingEnemy(this,
-                    Gdx.graphics.getWidth() - diameter, 3* i * diameter,
-                    MathUtils.random(360));
+                    Gdx.graphics.getWidth() - diameter, y);
 
             enemies.add(eLeft);
             enemies.add(eRight);
         }
-        
-        for(RotatingEnemy e : enemies) {
-            e.randomizeShootWait(SHOOT_LOW, SHOOT_HIGH);
+
+        for (RotatingEnemy e : enemies) {
+            e.randomize(SHOOT_LOW, SHOOT_HIGH);
         }
     }
 
@@ -88,25 +91,28 @@ public class SGASGame implements GameBase {
 
     @Override
     public void render() {
+        float delta = Gdx.graphics.getDeltaTime();
+
+        Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+        spriteBatch.begin();
 
         if (player.isAlive()) {
-            float delta = Gdx.graphics.getDeltaTime();
-            Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-
-            spriteBatch.begin();
-
             player.update(delta);
             for (RotatingEnemy e : enemies) {
                 e.update(delta);
             }
-
-            spriteBatch.end();
-
             collisionManager.clearResolvedCollisions();
         } else {
-            System.out.println("Game Over -- Score: " + getScore());
-            System.exit(0);
+            Text gameover = new Text(this, Gdx.graphics.getWidth() * 1f / 3f,
+                    Gdx.graphics.getHeight() * 2f / 3f);
+            gameover.setText("Game Over -- Top Score: " + topScore);
+            gameover.update(delta);
         }
+
+        text.setText("Score: " + getScore());
+        text.update(delta);
+
+        spriteBatch.end();
     }
 
     @Override
@@ -127,6 +133,9 @@ public class SGASGame implements GameBase {
 
     public void addScore(int score) {
         this.score += score;
+        if(this.score >= topScore) {
+            topScore = this.score;
+        }
     }
 
     public AssetWrapper getAssetWrapper() {

@@ -1,5 +1,6 @@
 package com.cmaher.sgas.entity;
 
+import com.badlogic.gdx.graphics.Color;
 import com.cmaher.game.FactionType;
 import com.cmaher.game.GameBase;
 import com.cmaher.game.components.FactionableCollisionComponent;
@@ -11,6 +12,7 @@ public class PlayerBullet extends Bullet implements Factionable {
 
     public PlayerBullet(GameBase game) {
         super(game);
+        bulletDraw.setTint(Color.GREEN);
     }
     
     @Override

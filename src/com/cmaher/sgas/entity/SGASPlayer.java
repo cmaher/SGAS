@@ -2,7 +2,6 @@ package com.cmaher.sgas.entity;
 
 import com.badlogic.gdx.graphics.Color;
 import com.cmaher.game.FactionType;
-import com.cmaher.game.GameBase;
 import com.cmaher.game.components.DrawComponent;
 import com.cmaher.game.components.FactionableCollisionComponent;
 import com.cmaher.game.components.LifeComponent;
@@ -23,12 +22,14 @@ import com.cmaher.sgas.components.PlayerShootInputComponent;
  * 
  */
 public class SGASPlayer extends EntityBase implements Factionable {
-    private static final String           SPRITE      = SGASGame.ASSETS
-                                                              + "player.png";
-    private static final float            RADIUS      = 32;
-    private static final float            MIN_SPEED   = 0f;
-    private static final float            MAX_SPEED   = 128f;
-    private static final int              TOUCH_SCORE = -1;
+    private static final String           SPRITE       = SGASGame.ASSETS
+                                                               + "player.png";
+    private static final float            RADIUS       = 32;
+    private static final float            MIN_SPEED    = 0f;
+    private static final float            MAX_SPEED    = 128f;
+    private static final int              TOUCH_SCORE  = -1;
+    private static final int              BULLET_SCORE = -20;
+    private static final int              MIN_POINT    = -20;
 
     private PlaceComponent                place;
     private DrawComponent                 draw;
@@ -45,8 +46,9 @@ public class SGASPlayer extends EntityBase implements Factionable {
         init(0, 0);
     }
 
-    public SGASPlayer(GameBase game, float x, float y) {
+    public SGASPlayer(SGASGame game, float x, float y) {
         super(game);
+        this.sgasg = game;
         init(x, y);
     }
 
@@ -73,10 +75,16 @@ public class SGASPlayer extends EntityBase implements Factionable {
         moveInput.update(delta);
         fireInput.update(delta);
         phys.update(delta);
+        place.moveToScreenBounds();
 
         draw.setTint(Color.GREEN);
 
         collision.update(delta);
+
+        if (sgasg.getScore() <= MIN_POINT) {
+            life.setAlive(false);
+        }
+
         draw.draw();
     }
 
@@ -87,7 +95,7 @@ public class SGASPlayer extends EntityBase implements Factionable {
 
     @Override
     public void collideUnfriendlyBullet(Factionable ufBullet) {
-        life.setAlive(false);
+        sgasg.addScore(BULLET_SCORE);
     }
 
     public void collideSolid(RadialCollisionComponent rcc) {
@@ -95,6 +103,7 @@ public class SGASPlayer extends EntityBase implements Factionable {
     }
 
     public boolean isAlive() {
-        return life.isAlive();
+        return true;
+        //return life.isAlive();
     }
 }
