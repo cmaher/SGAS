@@ -12,7 +12,6 @@ import com.cmaher.game.asset.AssetWrapper;
 import com.cmaher.game.collision.CollisionManager;
 import com.cmaher.game.entity.Text;
 import com.cmaher.game.properties.GameProperties;
-import com.cmaher.sgas.desktop.SGASDesktopGame;
 import com.cmaher.sgas.entity.RotatingEnemy;
 import com.cmaher.sgas.entity.SGASPlayer;
 
