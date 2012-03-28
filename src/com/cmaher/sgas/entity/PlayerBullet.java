@@ -9,35 +9,45 @@ import com.cmaher.game.entity.Factionable;
 
 public class PlayerBullet extends Bullet implements Factionable {
 
-    private RadialCollisionComponent collision;
+    private final static int         SCORE_BOOST = 10;
 
-    public PlayerBullet(GameBase game) {
+    private SGASPlayer               player;
+
+    public PlayerBullet(GameBase game, SGASPlayer player) {
         super(game);
+        this.player = player;
+    }
+    
+    @Override
+    protected void createCollision() {
         this.collision = new FactionableCollisionComponent(this, place,
                 FactionType.PlayerBullet, FactionType.Enemy,
                 FactionType.EnemyBullet);
     }
 
-    public void update(float delta) {
-        super.update(delta);
-        collision.update(delta);
-    }
 
     @Override
     public void collideUnfriendly(Factionable uf) {
-        this.kill();
+        if(isAlive()) {
+            this.kill();
+            player.addScore(SCORE_BOOST);
+        }
     }
 
     @Override
     public void collideUnfriendlyBullet(Factionable ufBullet) {
-        this.kill();
+        if(isAlive()) {    
+            this.kill();
+        }
     }
 
     @Override
     public void collideSolid(RadialCollisionComponent rcc) {
-        this.kill();
+        if(isAlive()) {
+            this.kill();
+        }
     }
-    
+
     @Override
     public void kill() {
         super.kill();

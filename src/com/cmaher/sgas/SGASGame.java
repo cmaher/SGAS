@@ -59,7 +59,7 @@ public class SGASGame implements GameBase {
             collisionManager.clearResolvedCollisions();
         } else {
             System.out.println("Game Over -- Score: " + player.getScore());
-            pause();
+            System.exit(0);
         }
     }
 

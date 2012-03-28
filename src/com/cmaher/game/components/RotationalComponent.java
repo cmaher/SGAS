@@ -17,4 +17,14 @@ public class RotationalComponent extends Component {
     public void update(float delta) {
         place.setAngle(place.getAngle() + angularVelocity * delta);
     }
+
+    public float getAngularVelocity() {
+        return angularVelocity;
+    }
+
+    public void setAngularVelocity(float angularVelocity) {
+        this.angularVelocity = angularVelocity;
+    }
+    
+    
 }

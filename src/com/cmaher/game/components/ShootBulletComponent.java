@@ -47,7 +47,7 @@ public class ShootBulletComponent extends Component {
         }
     }
 
-    public void fireNewBullet(float delta, Bullet newBullet) {
+    public void fireNewBullet(Bullet newBullet) {
         if (cumDelta >= bulletWaitTime) {
             float a = place.getAngle() * MathUtils.degreesToRadians;
             float xOff = OVERLAY_DISTANCE * MathUtils.cos(a) - OVERLAY_RADIUS;

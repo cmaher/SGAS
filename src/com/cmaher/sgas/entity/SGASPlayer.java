@@ -81,14 +81,12 @@ public class SGASPlayer extends EntityBase implements Factionable {
     }
 
     public void collideUnfriendly(Factionable uf) {
-        uf.collideUnfriendly(this);
         addScore(TOUCH_SCORE);
         draw.setTint(Color.RED);
     }
 
     @Override
     public void collideUnfriendlyBullet(Factionable ufBullet) {
-        ufBullet.collideUnfriendly(this);
         life.setAlive(false);
     }
 

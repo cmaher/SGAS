@@ -1,23 +1,20 @@
 package com.cmaher.game.components;
 
 import com.badlogic.gdx.math.Vector2;
-import com.cmaher.game.FactionType;
 import com.cmaher.game.collision.BoundingCircle;
+import com.cmaher.game.entity.EntityBase;
 import com.cmaher.game.entity.Factionable;
 
 public class RadialCollisionComponent extends Component {
     private static long    nextId = 0;
 
     private PlaceComponent place;
-    private FactionType    type;
     private BoundingCircle bounds;
     private long           id;
 
-    public RadialCollisionComponent(Factionable master, PlaceComponent place,
-            FactionType type) {
+    public RadialCollisionComponent(EntityBase master, PlaceComponent place) {
         super(master);
         this.place = place;
-        this.type = type;
         bounds = new BoundingCircle(place.getCenter(), place.getWidth() / 2);
         master.getGame().getCollisionManager().add(this);
         
@@ -43,14 +40,6 @@ public class RadialCollisionComponent extends Component {
         newPosition = rcc.getBounds().getCenter().add(newPosition);
         place.setPositionByCenter(newPosition);
         bounds.setCenter(place.getCenter());
-    }
-
-    public FactionType getType() {
-        return type;
-    }
-
-    public void setType(FactionType type) {
-        this.type = type;
     }
 
     public BoundingCircle getBounds() {

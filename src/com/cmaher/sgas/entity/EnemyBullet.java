@@ -8,31 +8,29 @@ import com.cmaher.game.entity.Bullet;
 import com.cmaher.game.entity.Factionable;
 
 public class EnemyBullet extends Bullet implements Factionable {
-
-    private RadialCollisionComponent collision;
-
     public EnemyBullet(GameBase game) {
-        super(game);
+        super(game); 
+    }
+    
+    @Override
+    protected void createCollision() {
         this.collision = new FactionableCollisionComponent(this, place,
                 FactionType.EnemyBullet, FactionType.Player,
                 FactionType.PlayerBullet);
     }
 
-    public void update(float delta) {
-        super.update(delta);
-        collision.update(delta);
-    }
-
     @Override
     public void collideUnfriendly(Factionable uf) {
-        this.kill();
-        uf.collideUnfriendlyBullet(this);
+        if(isAlive()) {
+            this.kill();
+        }
     }
 
     @Override
     public void collideUnfriendlyBullet(Factionable ufBullet) {
-        this.kill();
-        ufBullet.collideUnfriendlyBullet(this);
+        if(isAlive()) {
+            this.kill();
+        }
     }
 
     @Override

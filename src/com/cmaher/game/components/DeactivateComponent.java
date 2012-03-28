@@ -31,7 +31,10 @@ public class DeactivateComponent extends Component {
 
     public void deactivate() {
         this.deactivated = true;
-        ;
     }
-
+    
+    public void resetDeactivation() {
+        this.deactivated = true;
+        sumTime = 0;
+    }
 }
