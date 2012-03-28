@@ -1,8 +1,8 @@
 package com.cmaher.sgas.entity;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.MathUtils;
 import com.cmaher.game.FactionType;
-import com.cmaher.game.GameBase;
 import com.cmaher.game.components.DeactivateComponent;
 import com.cmaher.game.components.DrawComponent;
 import com.cmaher.game.components.FactionableCollisionComponent;
@@ -15,20 +15,21 @@ import com.cmaher.game.entity.Factionable;
 import com.cmaher.sgas.SGASGame;
 
 public class RotatingEnemy extends EntityBase implements Factionable {
-    private static final String           SPRITE             = SGASGame.ASSETS
-                                                                     + "player.png";
-    private static final float            RADIUS             = 32f;
-    private static final Color            COLOR              = new Color(255,
-                                                                     192, 203,
-                                                                     255);
-    private static final float            ANGULAR_V          = 30f;
+    public static final float             RADIUS               = 32f;
+    private static final String           SPRITE               = SGASGame.ASSETS
+                                                                       + "player.png";
+    private static final Color            COLOR                = new Color(255,
+                                                                       192,
+                                                                       203, 255);
+    private static final float            ANGULAR_V            = 30f;
 
-    private static final float            DEACTIVE_TIME      = .6f;
+    private static final float            DEACTIVE_TIME        = 1.5f;
 
-    private static final float            DEFAULT_SHOOT_WAIT = 1.2f;
-    private static final float            SHOOT_RATE_CHANGE  = -.05f;
-    private static final float            ANGLE_RATE_CHANGE  = 1f;
-    private static final int              SCORE_UPDATE       = 10;
+    private static final float            DEFAULT_SHOOT_WAIT   = 1.2f;
+    private static final float            DEFAULT_BULLET_SPEED = 256f;
+    private static final float            SHOOT_RATE_CHANGE    = -.05f;
+    private static final float            ANGLE_RATE_CHANGE    = 4f;
+    private static final int              SCORE_UPDATE         = 10;
 
     private PlaceComponent                place;
     private RotationalComponent           rotational;
@@ -58,8 +59,10 @@ public class RotatingEnemy extends EntityBase implements Factionable {
                 FactionType.Enemy, FactionType.Player, FactionType.PlayerBullet);
 
         deactivate = new DeactivateComponent(this, DEACTIVE_TIME);
+
         shoot = new ShootBulletComponent(this, place);
         shoot.setBulletWaitTime(DEFAULT_SHOOT_WAIT);
+        shoot.setBulletSpeed(DEFAULT_BULLET_SPEED);
 
         draw = new DrawComponent(this, place, SPRITE);
         draw.setTint(COLOR);
@@ -71,6 +74,10 @@ public class RotatingEnemy extends EntityBase implements Factionable {
         if (!deactivate.isDeactivated()) {
             rotational.update(delta);
             shoot.fireNewBullet(new EnemyBullet(game));
+
+            draw.setTint(Color.BLUE);
+        } else {
+            draw.setTint(COLOR);
         }
         shoot.update(delta);
         collision.update(delta);
@@ -82,17 +89,16 @@ public class RotatingEnemy extends EntityBase implements Factionable {
         uf.collideSolid(collision);
     }
 
-    
     /**
-     * deactivate, increase speed of angle and bullet fire rate
-     * only update score if not already deactivated
+     * deactivate, increase speed of angle and bullet fire rate only update
+     * score if not already deactivated
      */
     @Override
     public void collideUnfriendlyBullet(Factionable ufBullet) {
-        if(!deactivate.isDeactivated()) {
+        if (!deactivate.isDeactivated()) {
             sgasg.addScore(SCORE_UPDATE);
         }
-        
+
         deactivate.resetDeactivation();
         rotational.setAngularVelocity(rotational.getAngularVelocity()
                 + ANGLE_RATE_CHANGE);
@@ -104,4 +110,7 @@ public class RotatingEnemy extends EntityBase implements Factionable {
 
     }
 
+    public void randomizeShootWait(float low, float high) {
+        shoot.setBulletWaitTime(MathUtils.random(low, high));
+    }
 }

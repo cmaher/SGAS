@@ -20,12 +20,14 @@ public class ShootBulletComponent extends Component {
     private float              cumDelta                 = 0;
     private List<Bullet>       bullets;
     private float              bulletWaitTime;
+    private float              bulletSpeed;
 
     public ShootBulletComponent(EntityBase master, PlaceComponent place) {
         super(master);
         this.place = place;
         bullets = new LinkedList<Bullet>();
         bulletWaitTime = DEFAULT_BULLET_WAIT_TIME;
+        this.bulletSpeed = BULLET_SPEED;
 
     }
 
@@ -58,12 +60,12 @@ public class ShootBulletComponent extends Component {
             Vector2 bulletDirection = PhysicsComponent.VECTOR_RIGHT.cpy()
                     .rotate(place.getAngle());
             bullets.add(newBullet);
-            newBullet.shoot(bulletStart, bulletDirection, BULLET_SPEED);
+            newBullet.shoot(bulletStart, bulletDirection, bulletSpeed);
 
             cumDelta = 0;
         }
     }
-    
+
     public float getBulletWaitTime() {
         return bulletWaitTime;
     }
@@ -71,4 +73,14 @@ public class ShootBulletComponent extends Component {
     public void setBulletWaitTime(float bulletWaitTime) {
         this.bulletWaitTime = bulletWaitTime;
     }
+
+    public float getBulletSpeed() {
+        return bulletSpeed;
+    }
+
+    public void setBulletSpeed(float bulletSpeed) {
+        this.bulletSpeed = bulletSpeed;
+    }
+    
+    
 }
