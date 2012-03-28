@@ -39,21 +39,26 @@ public class RotatingEnemy extends EntityBase implements Factionable {
     private ShootBulletComponent          shoot;
     private SGASGame                      sgasg;
 
-    public RotatingEnemy(SGASGame game) {
+    private String                        pRoot;
+
+    public RotatingEnemy(SGASGame game, String pRoot) {
         super(game);
         this.sgasg = game;
+        this.pRoot = pRoot;
         init(0f, 0f, 0f);
     }
 
-    public RotatingEnemy(SGASGame game, float x, float y) {
+    public RotatingEnemy(SGASGame game, String pRoot, float x, float y) {
         super(game);
         this.sgasg = game;
+        this.pRoot = pRoot;
         init(x, y, 0f);
     }
 
-    public RotatingEnemy(SGASGame game, float x, float y, float angle) {
+    public RotatingEnemy(SGASGame game, String pRoot, float x, float y, float angle) {
         super(game);
         this.sgasg = game;
+        this.pRoot = pRoot;
         init(x, y, angle);
     }
 
@@ -85,7 +90,7 @@ public class RotatingEnemy extends EntityBase implements Factionable {
 
         if (!deactivate.isDeactivated()) {
             rotational.update(delta);
-            shoot.fireNewBullet(new EnemyBullet(game));
+            shoot.fireNewBullet(new EnemyBullet(game, pRoot));
 
             draw.setTint(Color.BLUE);
         } else {

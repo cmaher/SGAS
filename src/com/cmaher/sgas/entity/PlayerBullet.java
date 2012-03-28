@@ -7,11 +7,12 @@ import com.cmaher.game.components.FactionableCollisionComponent;
 import com.cmaher.game.components.RadialCollisionComponent;
 import com.cmaher.game.entity.Bullet;
 import com.cmaher.game.entity.Factionable;
+import com.cmaher.game.properties.GameProperties;
 
 public class PlayerBullet extends Bullet implements Factionable {
-
-    public PlayerBullet(GameBase game) {
-        super(game);
+    private static final String P_ROOT = "bullet"; 
+    public PlayerBullet(GameBase game, String pRoot) {
+        super(game, pRoot + GameProperties.SEP + P_ROOT);
         bulletDraw.setTint(Color.GREEN);
     }
     

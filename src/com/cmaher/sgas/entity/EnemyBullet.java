@@ -7,13 +7,16 @@ import com.cmaher.game.components.FactionableCollisionComponent;
 import com.cmaher.game.components.RadialCollisionComponent;
 import com.cmaher.game.entity.Bullet;
 import com.cmaher.game.entity.Factionable;
+import com.cmaher.game.properties.GameProperties;
 
 public class EnemyBullet extends Bullet implements Factionable {
-    public EnemyBullet(GameBase game) {
-        super(game);
+    private static final String P_ROOT = "bullet";
+
+    public EnemyBullet(GameBase game, String pRoot) {
+        super(game, pRoot + GameProperties.SEP + P_ROOT);
         bulletDraw.setTint(Color.BLUE);
     }
-    
+
     @Override
     protected void createCollision() {
         this.collision = new FactionableCollisionComponent(this, place,
@@ -23,21 +26,21 @@ public class EnemyBullet extends Bullet implements Factionable {
 
     @Override
     public void collideUnfriendly(Factionable uf) {
-        if(isAlive()) {
+        if (isAlive()) {
             this.kill();
         }
     }
 
     @Override
     public void collideUnfriendlyBullet(Factionable ufBullet) {
-        if(isAlive()) {
+        if (isAlive()) {
             this.kill();
         }
     }
 
     @Override
     public void collideSolid(RadialCollisionComponent rcc) {
-        
+
     }
 
     @Override
@@ -45,5 +48,5 @@ public class EnemyBullet extends Bullet implements Factionable {
         super.kill();
         game.getCollisionManager().remove(collision);
     }
-    
+
 }

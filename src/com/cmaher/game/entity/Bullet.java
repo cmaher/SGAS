@@ -7,6 +7,7 @@ import com.cmaher.game.components.DrawComponent;
 import com.cmaher.game.components.PhysicsComponent;
 import com.cmaher.game.components.PlaceComponent;
 import com.cmaher.game.components.RadialCollisionComponent;
+import com.cmaher.game.properties.GameProperties;
 import com.cmaher.sgas.SGASGame;
 
 /**
@@ -16,30 +17,42 @@ import com.cmaher.sgas.SGASGame;
  * 
  */
 public class Bullet extends EntityBase {
-    protected static final String    BULLET         = SGASGame.ASSETS
-                                                            + "bullet.png";
-    protected static final String    BULLET_OVERLAY = SGASGame.ASSETS
-                                                            + "bullet_overlay.png";
-    protected static final int       DIAMETER       = 16;
-
-    protected PlaceComponent         place;
-    protected PhysicsComponent       phys;
-    protected DrawComponent          bulletDraw;
-    protected DrawComponent          overlayDraw;
+    protected PlaceComponent           place;
+    protected PhysicsComponent         phys;
+    protected DrawComponent            bulletDraw;
+    protected DrawComponent            overlayDraw;
 
     protected boolean                  alive;
     protected RadialCollisionComponent collision;
 
-    public Bullet(GameBase game) {
-        super(game);
-        place = new PlaceComponent(this);
-        place.setWidth(DIAMETER);
-        place.setHeight(DIAMETER);
-        phys = new PhysicsComponent(this, place);
-        bulletDraw = new DrawComponent(this, place, BULLET);
+    protected String                   propertyBase;
+    protected static final String      P_SPRITE       = "sprite";
+    protected static final String      P_OVERLAY      = "overlay";
+    protected static final String      P_WIDTH        = "width";
+    protected static final String      P_HEIGHT       = "height";
 
-        overlayDraw = new DrawComponent(this, place, BULLET_OVERLAY);
+    protected String                   pSprite;
+    protected String                   pOverlay;
+    protected float                    pWidth;
+    protected float                    pHeight;
+
+    public Bullet(GameBase game, String propertyRoot) {
+        super(game);
+        getProperties(propertyRoot);
+        place = new PlaceComponent(this, 0, 0, pWidth, pHeight);
+        phys = new PhysicsComponent(this, place);
+        bulletDraw = new DrawComponent(this, place, pSprite);
+
+        overlayDraw = new DrawComponent(this, place, pOverlay);
         this.alive = false;
+    }
+
+    private void getProperties(String propertyRoot) {
+        GameProperties props = game.getGameProperties();
+        pSprite = props.getString(propertyRoot, P_SPRITE, "");
+        pOverlay = props.getString(propertyRoot, P_OVERLAY, "");
+        pWidth = props.getFloat(propertyRoot, P_WIDTH, 1);
+        pHeight = props.getFloat(propertyRoot, P_HEIGHT, 1);
     }
 
     public void shoot(Vector2 origin, Vector2 direction, float speed) {
@@ -50,9 +63,9 @@ public class Bullet extends EntityBase {
         alive = true;
         this.createCollision();
     }
-    
+
     protected void createCollision() {
-    	
+
         this.collision = new RadialCollisionComponent(this, place);
     }
 

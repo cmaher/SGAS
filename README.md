@@ -33,6 +33,9 @@ Enemy firing (at intervals).  Bullet typeof(EnemyBullet|PlayerBullet) Player-bul
 ####Stage 6
 Something approaching an actual sample game (albeit, quite lame).  The main point is to demonstrate how everything done so far fits together.
 
+####Stage 7
+Loading assets and values from properties file
+
 
 ###LICENSE  (Simplified BSD License)
 Copyright (c) 2012, Christian Maher
