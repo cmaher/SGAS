@@ -12,12 +12,11 @@ import com.cmaher.sgas.entity.SGASPlayer;
 public class SGASGame implements GameBase {
     public static final String ASSETS = "assets/"; // NOTE: "assets\" fails
 
-    private AssetWrapper        assetWrapper;
-    private SpriteBatch         spriteBatch;
-    private CollisionManager    collisionManager;
+    private AssetWrapper       assetWrapper;
+    private SpriteBatch        spriteBatch;
+    private CollisionManager   collisionManager;
 
-
-    private SGASPlayer             player;
+    private SGASPlayer         player;
     private RotatingEnemy      rEnemy;
 
     @Override
@@ -25,15 +24,14 @@ public class SGASGame implements GameBase {
         assetWrapper = new AssetWrapper();
         spriteBatch = new SpriteBatch();
         collisionManager = new CollisionManager();
-        
+
         Gdx.gl.glClearColor(1f, 1f, 1f, 1f);
 
         player = new SGASPlayer(this);
         rEnemy = new RotatingEnemy(this, 200, 300, 0);
 
         assetWrapper.getAssetManager().finishLoading();
-        
-        
+
     }
 
     @Override
@@ -50,14 +48,19 @@ public class SGASGame implements GameBase {
 
     @Override
     public void render() {
-        float delta = Gdx.graphics.getDeltaTime();
-        Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-        spriteBatch.begin();
-        player.update(delta);
-        rEnemy.update(delta);
-        spriteBatch.end();
-        collisionManager.clearResolvedCollisions();
-
+        
+        if(player.isAlive()) {
+            float delta = Gdx.graphics.getDeltaTime();
+            Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+            spriteBatch.begin();
+            player.update(delta);
+            rEnemy.update(delta);
+            spriteBatch.end();
+            collisionManager.clearResolvedCollisions();
+        } else {
+            System.out.println("Game Over -- Score: " + player.getScore());
+            pause();
+        }
     }
 
     @Override
@@ -71,7 +74,7 @@ public class SGASGame implements GameBase {
         // TODO Auto-generated method stub
 
     }
-    
+
     public AssetWrapper getAssetWrapper() {
         return assetWrapper;
     }
@@ -83,5 +86,4 @@ public class SGASGame implements GameBase {
     public CollisionManager getCollisionManager() {
         return collisionManager;
     }
-
 }

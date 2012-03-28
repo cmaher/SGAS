@@ -25,18 +25,22 @@ public class PlayerBullet extends Bullet implements Factionable {
 
     @Override
     public void collideUnfriendly(Factionable uf) {
-        uf.collideUnfriendlyBullet(this);
         this.kill();
     }
 
     @Override
     public void collideUnfriendlyBullet(Factionable ufBullet) {
-        ufBullet.collideUnfriendlyBullet(this);
         this.kill();
     }
 
     @Override
     public void collideSolid(RadialCollisionComponent rcc) {
         this.kill();
+    }
+    
+    @Override
+    public void kill() {
+        super.kill();
+        game.getCollisionManager().remove(collision);
     }
 }

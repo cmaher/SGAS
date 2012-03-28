@@ -25,20 +25,25 @@ public class EnemyBullet extends Bullet implements Factionable {
 
     @Override
     public void collideUnfriendly(Factionable uf) {
-        // TODO Auto-generated method stub
-
+        this.kill();
+        uf.collideUnfriendlyBullet(this);
     }
 
     @Override
     public void collideUnfriendlyBullet(Factionable ufBullet) {
-        // TODO Auto-generated method stub
-
+        this.kill();
+        ufBullet.collideUnfriendlyBullet(this);
     }
 
     @Override
     public void collideSolid(RadialCollisionComponent rcc) {
-        // TODO Auto-generated method stub
-
+        
     }
 
+    @Override
+    public void kill() {
+        super.kill();
+        game.getCollisionManager().remove(collision);
+    }
+    
 }
