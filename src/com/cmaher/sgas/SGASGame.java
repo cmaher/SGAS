@@ -18,6 +18,7 @@ public class SGASGame implements GameBase {
 
     private SGASPlayer         player;
     private RotatingEnemy      rEnemy;
+    private int                score  = 0;
 
     @Override
     public void create() {
@@ -48,8 +49,8 @@ public class SGASGame implements GameBase {
 
     @Override
     public void render() {
-        
-        if(player.isAlive()) {
+
+        if (player.isAlive()) {
             float delta = Gdx.graphics.getDeltaTime();
             Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
             spriteBatch.begin();
@@ -58,7 +59,7 @@ public class SGASGame implements GameBase {
             spriteBatch.end();
             collisionManager.clearResolvedCollisions();
         } else {
-            System.out.println("Game Over -- Score: " + player.getScore());
+            System.out.println("Game Over -- Score: " + getScore());
             System.exit(0);
         }
     }
@@ -73,6 +74,14 @@ public class SGASGame implements GameBase {
     public void resume() {
         // TODO Auto-generated method stub
 
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void addScore(int score) {
+        this.score += score;
     }
 
     public AssetWrapper getAssetWrapper() {

@@ -37,11 +37,11 @@ public class SGASPlayer extends EntityBase implements Factionable {
     private PlayerShootInputComponent     fireInput;
     private FactionableCollisionComponent collision;
     private LifeComponent                 life;
+    private SGASGame                      sgasg;
 
-    private int                           score       = 0;
-
-    public SGASPlayer(GameBase game) {
+    public SGASPlayer(SGASGame game) {
         super(game);
+        this.sgasg = game;
         init(0, 0);
     }
 
@@ -62,7 +62,7 @@ public class SGASPlayer extends EntityBase implements Factionable {
         fireInput = new PlayerShootInputComponent(this, place);
         collision = new FactionableCollisionComponent(this, place,
                 FactionType.Player, FactionType.Enemy, FactionType.EnemyBullet);
-        
+
         life = new LifeComponent(this);
 
         game.getAssetWrapper().addTextureAsset(SPRITE);
@@ -81,7 +81,7 @@ public class SGASPlayer extends EntityBase implements Factionable {
     }
 
     public void collideUnfriendly(Factionable uf) {
-        addScore(TOUCH_SCORE);
+        sgasg.addScore(TOUCH_SCORE);
         draw.setTint(Color.RED);
     }
 
@@ -94,14 +94,6 @@ public class SGASPlayer extends EntityBase implements Factionable {
         collision.stopAtSolid(rcc);
     }
 
-    public int getScore() {
-        return score;
-    }
-
-    public void addScore(int score) {
-        this.score += score;
-    }
-    
     public boolean isAlive() {
         return life.isAlive();
     }

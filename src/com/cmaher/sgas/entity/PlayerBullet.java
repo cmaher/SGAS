@@ -9,13 +9,8 @@ import com.cmaher.game.entity.Factionable;
 
 public class PlayerBullet extends Bullet implements Factionable {
 
-    private final static int         SCORE_BOOST = 10;
-
-    private SGASPlayer               player;
-
-    public PlayerBullet(GameBase game, SGASPlayer player) {
+    public PlayerBullet(GameBase game) {
         super(game);
-        this.player = player;
     }
     
     @Override
@@ -30,7 +25,6 @@ public class PlayerBullet extends Bullet implements Factionable {
     public void collideUnfriendly(Factionable uf) {
         if(isAlive()) {
             this.kill();
-            player.addScore(SCORE_BOOST);
         }
     }
 

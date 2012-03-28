@@ -28,6 +28,7 @@ public class RotatingEnemy extends EntityBase implements Factionable {
     private static final float            DEFAULT_SHOOT_WAIT = 1.2f;
     private static final float            SHOOT_RATE_CHANGE  = -.05f;
     private static final float            ANGLE_RATE_CHANGE  = 1f;
+    private static final int              SCORE_UPDATE       = 10;
 
     private PlaceComponent                place;
     private RotationalComponent           rotational;
@@ -35,14 +36,17 @@ public class RotatingEnemy extends EntityBase implements Factionable {
     private DrawComponent                 draw;
     private DeactivateComponent           deactivate;
     private ShootBulletComponent          shoot;
+    private SGASGame                      sgasg;
 
-    public RotatingEnemy(GameBase game) {
+    public RotatingEnemy(SGASGame game) {
         super(game);
+        this.sgasg = game;
         init(0f, 0f, 0f);
     }
 
-    public RotatingEnemy(GameBase game, float x, float y, float angle) {
+    public RotatingEnemy(SGASGame game, float x, float y, float angle) {
         super(game);
+        this.sgasg = game;
         init(x, y, angle);
     }
 
@@ -78,10 +82,20 @@ public class RotatingEnemy extends EntityBase implements Factionable {
         uf.collideSolid(collision);
     }
 
+    
+    /**
+     * deactivate, increase speed of angle and bullet fire rate
+     * only update score if not already deactivated
+     */
     @Override
     public void collideUnfriendlyBullet(Factionable ufBullet) {
+        if(!deactivate.isDeactivated()) {
+            sgasg.addScore(SCORE_UPDATE);
+        }
+        
         deactivate.resetDeactivation();
-        rotational.setAngularVelocity(rotational.getAngularVelocity() + ANGLE_RATE_CHANGE);
+        rotational.setAngularVelocity(rotational.getAngularVelocity()
+                + ANGLE_RATE_CHANGE);
         shoot.setBulletWaitTime(shoot.getBulletWaitTime() + SHOOT_RATE_CHANGE);
     }
 
