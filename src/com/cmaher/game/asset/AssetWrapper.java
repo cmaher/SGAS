@@ -15,7 +15,9 @@ public class AssetWrapper {
     }
 
     public void addTextureAsset(String assetStr) {
-        assetManager.load(assetStr, Texture.class);
+        if(!assetStr.isEmpty()) {
+            assetManager.load(assetStr, Texture.class);
+        }
     }
 
     private void checkAndLoadTexture(String assetStr) {

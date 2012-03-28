@@ -41,6 +41,9 @@ Something approaching an actual sample game (albeit, quite lame).  The main poin
 + The game ends when you have -20 points or fewer
 
 
+####Stage 7
+Loading assets and values from properties file
+
 
 ###LICENSE  (Simplified BSD License)
 Copyright (c) 2012, Christian Maher

@@ -11,20 +11,20 @@ import com.cmaher.sgas.entity.SGASPlayer;
 public class PlayerShootInputComponent extends Component {
     private final static int     BUTTON_FIRE_PRIMARY      = Input.Buttons.LEFT;
     
-    ShootBulletComponent shoot;
-    SGASPlayer player;
+    private ShootBulletComponent shoot;
+    private String pRoot;
     
     // use pool of bullets
-    public PlayerShootInputComponent(SGASPlayer master, PlaceComponent place) {
+    public PlayerShootInputComponent(SGASPlayer master, PlaceComponent place, String pRoot) {
         super(master);
-        this.player = master;
+        this.pRoot = pRoot;
         shoot = new ShootBulletComponent(master, place);
         
     }
     
     public void update(float delta) {
         if(Gdx.input.isButtonPressed(BUTTON_FIRE_PRIMARY)) {
-            shoot.fireNewBullet(new PlayerBullet(master.getGame()));
+            shoot.fireNewBullet(new PlayerBullet(master.getGame(), pRoot));
         }
         shoot.update(delta);
     }

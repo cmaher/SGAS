@@ -1,0 +1,11 @@
+#enemy properties
+enemy.bullet.sprite = assets/bullet.png
+enemy.bullet.overlay = assets/bullet_overlay.png
+enemy.bullet.width = 16
+enemy.bullet.height = 16
+
+#player properties
+player.bullet.sprite = assets/bullet.png
+player.bullet.overlay = assets/bullet_overlay.png
+player.bullet.width = 16
+player.bullet.height = 16

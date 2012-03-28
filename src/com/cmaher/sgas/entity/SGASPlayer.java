@@ -40,15 +40,19 @@ public class SGASPlayer extends EntityBase implements Factionable {
     private LifeComponent                 life;
     private SGASGame                      sgasg;
 
-    public SGASPlayer(SGASGame game) {
+    private String                        pRoot;
+
+    public SGASPlayer(SGASGame game, String pRoot) {
         super(game);
         this.sgasg = game;
+        this.pRoot = pRoot;
         init(0, 0);
     }
 
-    public SGASPlayer(SGASGame game, float x, float y) {
+    public SGASPlayer(SGASGame game, String pRoot, float x, float y) {
         super(game);
         this.sgasg = game;
+        this.pRoot = pRoot;
         init(x, y);
     }
 
@@ -61,7 +65,7 @@ public class SGASPlayer extends EntityBase implements Factionable {
         phys = new PhysicsComponent(this, place, MIN_SPEED, MAX_SPEED);
 
         moveInput = new PlayerMoveInputComponent(this, place, phys);
-        fireInput = new PlayerShootInputComponent(this, place);
+        fireInput = new PlayerShootInputComponent(this, place, pRoot);
         collision = new FactionableCollisionComponent(this, place,
                 FactionType.Player, FactionType.Enemy, FactionType.EnemyBullet);
 
@@ -103,7 +107,7 @@ public class SGASPlayer extends EntityBase implements Factionable {
     }
 
     public boolean isAlive() {
-    	//return true;
-    	return life.isAlive();
+        // return true;
+        return life.isAlive();
     }
 }

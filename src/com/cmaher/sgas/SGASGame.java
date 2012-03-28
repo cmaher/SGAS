@@ -10,26 +10,33 @@ import com.cmaher.game.GameBase;
 import com.cmaher.game.asset.AssetWrapper;
 import com.cmaher.game.collision.CollisionManager;
 import com.cmaher.game.entity.Text;
+import com.cmaher.game.properties.GameProperties;
 import com.cmaher.sgas.entity.RotatingEnemy;
 import com.cmaher.sgas.entity.SGASPlayer;
 
 public class SGASGame implements GameBase {
-    public static final String  ASSETS     = "assets/"; // NOTE: "assets\" fails
+    public static final String  ASSETS     = "assets/";   // NOTE: "assets\"
+                                                           // fails
     private static final float  SHOOT_LOW  = 1.5f;
     private static final float  SHOOT_HIGH = 2.0f;
+
+    private static final String PROPS_FILE = "game.props";
+    private static final String P_ENEMY    = "enemy";
+    private static final String P_PLAYER   = "player";
 
     private AssetWrapper        assetWrapper;
     private SpriteBatch         spriteBatch;
     private CollisionManager    collisionManager;
+    private GameProperties      gameProps;
 
     private SGASPlayer          player;
     private List<RotatingEnemy> enemies;
     private Text                text;
-    private Text			  	fpsText;
+    private Text                fpsText;
     private int                 score      = 0;
     private int                 topScore   = 0;
-    private int 				highFPS    = 0;
-    private int 			    lowFPS	   = 999;
+    private int                 highFPS    = 0;
+    private int                 lowFPS     = 999;
 
     @Override
     public void create() {
@@ -39,14 +46,14 @@ public class SGASGame implements GameBase {
 
         Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
 
-        player = new SGASPlayer(this, Gdx.graphics.getWidth() / 2,
+        player = new SGASPlayer(this, P_PLAYER, Gdx.graphics.getWidth() / 2,
                 Gdx.graphics.getHeight() / 2);
         createEnemies();
         text = new Text(this, 0, 20);
         fpsText = new Text(this, 0, Gdx.graphics.getHeight());
 
         assetWrapper.getAssetManager().finishLoading();
-
+        gameProps = new GameProperties(PROPS_FILE);
     }
 
     private void createEnemies() {
@@ -57,8 +64,8 @@ public class SGASGame implements GameBase {
         for (int i = 0; i < 6; i++) {
             float x = 2.88f * i * diameter;
 
-            RotatingEnemy eBottom = new RotatingEnemy(this, x, 0);
-            RotatingEnemy eTop = new RotatingEnemy(this, x,
+            RotatingEnemy eBottom = new RotatingEnemy(this, P_ENEMY, x, 0);
+            RotatingEnemy eTop = new RotatingEnemy(this, P_ENEMY, x,
                     Gdx.graphics.getHeight() - diameter);
 
             enemies.add(eBottom);
@@ -68,8 +75,8 @@ public class SGASGame implements GameBase {
         // side enemies
         for (int i = 1; i < 3; i++) {
             float y = 3 * i * diameter;
-            RotatingEnemy eLeft = new RotatingEnemy(this, 0, y);
-            RotatingEnemy eRight = new RotatingEnemy(this,
+            RotatingEnemy eLeft = new RotatingEnemy(this, P_ENEMY, 0, y);
+            RotatingEnemy eRight = new RotatingEnemy(this, P_ENEMY,
                     Gdx.graphics.getWidth() - diameter, y);
 
             enemies.add(eLeft);
@@ -97,13 +104,12 @@ public class SGASGame implements GameBase {
     public void render() {
         float delta = Gdx.graphics.getDeltaTime();
         int fps = Gdx.graphics.getFramesPerSecond();
-        if(fps > highFPS) {
-        	highFPS = fps;
-        } 
-        else if(fps < lowFPS && fps != 0) {
-        	lowFPS = fps;
+        if (fps > highFPS) {
+            highFPS = fps;
+        } else if (fps < lowFPS && fps != 0) {
+            lowFPS = fps;
         }
-        
+
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
         spriteBatch.begin();
 
@@ -122,10 +128,9 @@ public class SGASGame implements GameBase {
 
         text.setText("Score: " + getScore());
         text.update(delta);
-        
+
         fpsText.setText("FPS: " + fps);
         fpsText.update(delta);
-        
 
         spriteBatch.end();
     }
@@ -148,7 +153,7 @@ public class SGASGame implements GameBase {
 
     public void addScore(int score) {
         this.score += score;
-        if(this.score >= topScore) {
+        if (this.score >= topScore) {
             topScore = this.score;
         }
     }
@@ -163,5 +168,9 @@ public class SGASGame implements GameBase {
 
     public CollisionManager getCollisionManager() {
         return collisionManager;
+    }
+
+    public GameProperties getGameProperties() {
+        return gameProps;
     }
 }
