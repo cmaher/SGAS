@@ -18,7 +18,7 @@ public class RotatingEnemy extends EntityBase implements Factionable {
     public static final float             RADIUS               = 32f;
     private static final String           SPRITE               = SGASGame.ASSETS
                                                                        + "player.png";
-    private static final Color            COLOR                = new Color(255,
+    private static final Color            DEACTIVE_COLOR       = new Color(255,
                                                                        192,
                                                                        203, 255);
     private static final float            ANGULAR_V            = 30f;
@@ -26,9 +26,9 @@ public class RotatingEnemy extends EntityBase implements Factionable {
     private static final float            DEACTIVE_TIME        = 1.5f;
 
     private static final float            DEFAULT_SHOOT_WAIT   = 0f;
-    private static final float            DEFAULT_BULLET_SPEED = 128;
-    private static final float            SHOOT_RATE_CHANGE    = -.1f;
-    private static final float            ANGLE_RATE_CHANGE    = 4f;
+    private static final float            DEFAULT_BULLET_SPEED = 256;
+    private static final float            SHOOT_RATE_CHANGE    = -.2f;
+    private static final float            ANGLE_RATE_CHANGE    = 8f;
     private static final int              SCORE_UPDATE         = 10;
 
     private PlaceComponent                place;
@@ -71,21 +71,27 @@ public class RotatingEnemy extends EntityBase implements Factionable {
         shoot.setBulletSpeed(DEFAULT_BULLET_SPEED);
 
         draw = new DrawComponent(this, place, SPRITE);
-        draw.setTint(COLOR);
+        draw.setTint(DEACTIVE_COLOR);
         game.getAssetWrapper().addTextureAsset(SPRITE);
     }
 
     public void update(float delta) {
+        boolean prevDeactivated = deactivate.isDeactivated();
+
         deactivate.update(delta);
+        if (prevDeactivated && !deactivate.isDeactivated()) {
+            shoot.resetWaitTime();
+        }
+
         if (!deactivate.isDeactivated()) {
             rotational.update(delta);
-            shoot.update(delta);
             shoot.fireNewBullet(new EnemyBullet(game));
 
             draw.setTint(Color.BLUE);
         } else {
-            draw.setTint(COLOR);
+            draw.setTint(DEACTIVE_COLOR);
         }
+
         shoot.update(delta);
         collision.update(delta);
         draw.draw();

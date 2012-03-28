@@ -32,7 +32,7 @@ public class PlayerBullet extends Bullet implements Factionable {
 
     @Override
     public void collideUnfriendlyBullet(Factionable ufBullet) {
-        if(isAlive()) {    
+        if(isAlive()) { 
             this.kill();
         }
     }

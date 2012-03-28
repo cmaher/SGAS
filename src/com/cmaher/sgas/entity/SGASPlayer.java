@@ -103,7 +103,7 @@ public class SGASPlayer extends EntityBase implements Factionable {
     }
 
     public boolean isAlive() {
-        return true;
-        //return life.isAlive();
+    	//return true;
+    	return life.isAlive();
     }
 }

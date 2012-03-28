@@ -1,7 +1,6 @@
 package com.cmaher.game.entity;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.cmaher.game.GameBase;
 import com.cmaher.game.components.DrawComponent;
@@ -38,7 +37,7 @@ public class Bullet extends EntityBase {
         place.setHeight(DIAMETER);
         phys = new PhysicsComponent(this, place);
         bulletDraw = new DrawComponent(this, place, BULLET);
-        bulletDraw.setTint(Color.RED);
+
         overlayDraw = new DrawComponent(this, place, BULLET_OVERLAY);
         this.alive = false;
     }
@@ -48,12 +47,12 @@ public class Bullet extends EntityBase {
         phys.setVelocity(direction, speed);
         phys.setMaxSpeed(speed);
         phys.setMinSpeed(speed);
-
         alive = true;
-        createCollision();
+        this.createCollision();
     }
     
     protected void createCollision() {
+    	
         this.collision = new RadialCollisionComponent(this, place);
     }
 

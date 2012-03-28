@@ -16,7 +16,7 @@ import com.cmaher.sgas.entity.SGASPlayer;
 public class SGASGame implements GameBase {
     public static final String  ASSETS     = "assets/"; // NOTE: "assets\" fails
     private static final float  SHOOT_LOW  = 1.5f;
-    private static final float  SHOOT_HIGH = 3.0f;
+    private static final float  SHOOT_HIGH = 2.0f;
 
     private AssetWrapper        assetWrapper;
     private SpriteBatch         spriteBatch;
@@ -25,8 +25,11 @@ public class SGASGame implements GameBase {
     private SGASPlayer          player;
     private List<RotatingEnemy> enemies;
     private Text                text;
+    private Text			  	fpsText;
     private int                 score      = 0;
     private int                 topScore   = 0;
+    private int 				highFPS    = 0;
+    private int 			    lowFPS	   = 999;
 
     @Override
     public void create() {
@@ -40,6 +43,7 @@ public class SGASGame implements GameBase {
                 Gdx.graphics.getHeight() / 2);
         createEnemies();
         text = new Text(this, 0, 20);
+        fpsText = new Text(this, 0, Gdx.graphics.getHeight());
 
         assetWrapper.getAssetManager().finishLoading();
 
@@ -92,7 +96,14 @@ public class SGASGame implements GameBase {
     @Override
     public void render() {
         float delta = Gdx.graphics.getDeltaTime();
-
+        int fps = Gdx.graphics.getFramesPerSecond();
+        if(fps > highFPS) {
+        	highFPS = fps;
+        } 
+        else if(fps < lowFPS && fps != 0) {
+        	lowFPS = fps;
+        }
+        
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
         spriteBatch.begin();
 
@@ -111,6 +122,10 @@ public class SGASGame implements GameBase {
 
         text.setText("Score: " + getScore());
         text.update(delta);
+        
+        fpsText.setText("FPS: " + fps);
+        fpsText.update(delta);
+        
 
         spriteBatch.end();
     }

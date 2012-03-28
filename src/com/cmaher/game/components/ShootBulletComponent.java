@@ -17,7 +17,7 @@ public class ShootBulletComponent extends Component {
     private final static float BULLET_SPEED             = 512;
 
     private PlaceComponent     place;
-    private float              cumDelta                 = 0;
+    private float              sumDelta                 = 0;
     private List<Bullet>       bullets;
     private float              bulletWaitTime;
     private float              bulletSpeed;
@@ -42,15 +42,15 @@ public class ShootBulletComponent extends Component {
             }
         }
 
-        cumDelta += delta;
+        sumDelta += delta;
         // handle extremely rare overflow case
-        if (cumDelta < 0) {
-            cumDelta = bulletWaitTime;
+        if (sumDelta < 0) {
+            sumDelta = bulletWaitTime;
         }
     }
 
     public void fireNewBullet(Bullet newBullet) {
-        if (cumDelta >= bulletWaitTime) {
+        if (sumDelta >= bulletWaitTime) {
             float a = place.getAngle() * MathUtils.degreesToRadians;
             float xOff = OVERLAY_DISTANCE * MathUtils.cos(a) - OVERLAY_RADIUS;
             float yOff = OVERLAY_DISTANCE * MathUtils.sin(a) - OVERLAY_RADIUS;
@@ -62,7 +62,7 @@ public class ShootBulletComponent extends Component {
             bullets.add(newBullet);
             newBullet.shoot(bulletStart, bulletDirection, bulletSpeed);
 
-            cumDelta = 0;
+            sumDelta = 0;
         }
     }
 
@@ -81,6 +81,8 @@ public class ShootBulletComponent extends Component {
     public void setBulletSpeed(float bulletSpeed) {
         this.bulletSpeed = bulletSpeed;
     }
-    
-    
+
+    public void resetWaitTime() {
+    	this.sumDelta = 0;
+    }
 }
