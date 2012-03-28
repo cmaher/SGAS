@@ -8,7 +8,6 @@ import com.cmaher.game.components.PhysicsComponent;
 import com.cmaher.game.components.PlaceComponent;
 import com.cmaher.game.components.RadialCollisionComponent;
 import com.cmaher.game.properties.GameProperties;
-import com.cmaher.sgas.SGASGame;
 
 /**
  * TODO: In Order to make this truly generic, import assets from config
