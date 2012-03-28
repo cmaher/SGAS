@@ -32,6 +32,14 @@ Enemy firing (at intervals).  Bullet typeof(EnemyBullet|PlayerBullet) Player-bul
 
 ####Stage 6
 Something approaching an actual sample game (albeit, quite lame).  The main point is to demonstrate how everything done so far fits together.
+#####Game Rules
++ WASD moves
++ Left mouse button shoots in direction of mouse
++ Hitting enemies disables them, but increases their fire and rotation rates
++ Hitting a nondisabled enemy grants gives 10 points
++ Getting hit by a bullet loses 20 points
++ The game ends when you have -20 points or fewer
+
 
 
 ###LICENSE  (Simplified BSD License)
