@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.cmaher.game.GameBase;
@@ -11,6 +12,7 @@ import com.cmaher.game.asset.AssetWrapper;
 import com.cmaher.game.collision.CollisionManager;
 import com.cmaher.game.entity.Text;
 import com.cmaher.game.properties.GameProperties;
+import com.cmaher.sgas.desktop.SGASDesktopGame;
 import com.cmaher.sgas.entity.RotatingEnemy;
 import com.cmaher.sgas.entity.SGASPlayer;
 
@@ -33,8 +35,8 @@ public class SGASGame implements GameBase {
     private List<RotatingEnemy> enemies;
     private Text                text;
     private Text                fpsText;
-    private int                 score      = 0;
-    private int                 topScore   = 0;
+    private int                 score;
+    private int                 topScore;
     private int                 highFPS    = 0;
     private int                 lowFPS     = 999;
 
@@ -54,6 +56,9 @@ public class SGASGame implements GameBase {
 
         assetWrapper.getAssetManager().finishLoading();
         gameProps = new GameProperties(PROPS_FILE);
+
+        score = 0;
+        topScore = 0;
     }
 
     private void createEnemies() {
@@ -103,6 +108,7 @@ public class SGASGame implements GameBase {
     @Override
     public void render() {
         float delta = Gdx.graphics.getDeltaTime();
+        boolean reset = false;
         int fps = Gdx.graphics.getFramesPerSecond();
         if (fps > highFPS) {
             highFPS = fps;
@@ -122,17 +128,25 @@ public class SGASGame implements GameBase {
         } else {
             Text gameover = new Text(this, Gdx.graphics.getWidth() * 1f / 3f,
                     Gdx.graphics.getHeight() * 2f / 3f);
-            gameover.setText("Game Over -- Top Score: " + topScore);
+            gameover.setText("Game Over -- Top Score: " + topScore
+                    + " (space to reset)");
             gameover.update(delta);
+            if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+                this.dispose();
+                reset = true;
+                this.create();
+            }
         }
 
-        text.setText("Score: " + getScore());
-        text.update(delta);
+        if (!reset) {
+            text.setText("Score: " + getScore());
+            text.update(delta);
 
-        fpsText.setText("FPS: " + fps);
-        fpsText.update(delta);
+            fpsText.setText("FPS: " + fps);
+            fpsText.update(delta);
 
-        spriteBatch.end();
+            spriteBatch.end();
+        }
     }
 
     @Override
