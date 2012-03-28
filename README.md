@@ -35,8 +35,8 @@ Something approaching an actual sample game (albeit, quite lame).  The main poin
 #####Game Rules
 + WASD moves
 + Left mouse button shoots in direction of mouse
-+ Hitting enemies disables them, but increases their fire and rotation rates
-+ Hitting a nondisabled enemy grants gives 10 points
++ Shooting enemies disables them temporarily, but increases their fire and rotation rates
++ Shooting a nondisabled enemy grants 10 points
 + Getting hit by a bullet loses 20 points
 + The game ends when you have -20 points or fewer
 
