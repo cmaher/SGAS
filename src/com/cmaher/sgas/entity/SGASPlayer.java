@@ -27,9 +27,9 @@ public class SGASPlayer extends EntityBase implements Factionable {
     private static final float            RADIUS       = 32;
     private static final float            MIN_SPEED    = 0f;
     private static final float            MAX_SPEED    = 128f;
-    private static final int              TOUCH_SCORE  = -1;
     private static final int              BULLET_SCORE = -20;
     private static final int              MIN_POINT    = -20;
+    private static final float            HIT_DELTA    = .3f;
 
     private PlaceComponent                place;
     private DrawComponent                 draw;
@@ -41,6 +41,8 @@ public class SGASPlayer extends EntityBase implements Factionable {
     private SGASGame                      sgasg;
 
     private String                        pRoot;
+    private float                         sumDelta     = 0;
+    private boolean                       hit          = false;
 
     public SGASPlayer(SGASGame game, String pRoot) {
         super(game);
@@ -85,6 +87,17 @@ public class SGASPlayer extends EntityBase implements Factionable {
 
         collision.update(delta);
 
+        if (hit) {
+            sumDelta += delta;
+
+            if (sumDelta >= HIT_DELTA) {
+                sumDelta = 0;
+                hit = false;
+            } else {
+                draw.setTint(Color.RED);
+            }
+        }
+
         if (sgasg.getScore() <= MIN_POINT) {
             life.setAlive(false);
         }
@@ -93,13 +106,12 @@ public class SGASPlayer extends EntityBase implements Factionable {
     }
 
     public void collideUnfriendly(Factionable uf) {
-        sgasg.addScore(TOUCH_SCORE);
-        draw.setTint(Color.RED);
     }
 
     @Override
     public void collideUnfriendlyBullet(Factionable ufBullet) {
         sgasg.addScore(BULLET_SCORE);
+        hit = true;
     }
 
     public void collideSolid(RadialCollisionComponent rcc) {
