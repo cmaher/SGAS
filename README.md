@@ -9,6 +9,7 @@ Since the purpose of this project is education, I will be creating a branch for 
 
 This project also aims to provide a basic engine that builds off of the framework provided by LibGDX (albeit, an engine where every visible asset has circular bounds).
 
+NOTE: This project is in a state of development, and nothing should be considered a permanant feature.  Everything is subject to change, including interfaces to well-established classes.
 
 ###Stages
 
