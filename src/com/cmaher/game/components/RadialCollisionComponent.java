@@ -5,7 +5,7 @@ import com.cmaher.game.collision.BoundingCircle;
 import com.cmaher.game.entity.EntityBase;
 import com.cmaher.game.entity.Factionable;
 
-public class RadialCollisionComponent extends Component {
+public class RadialCollisionComponent extends Component implements CollisionComponent {
     private static long    nextId = 0;
 
     private PlaceComponent place;
@@ -21,23 +21,26 @@ public class RadialCollisionComponent extends Component {
         this.id = nextId++;
     }
 
+
+    @Override
     public void update(float delta) {
         bounds.setCenter(place.getCenter());
         bounds.setRadius(place.getWidth() / 2);
     }
 
-    public boolean checkCollision(RadialCollisionComponent other) {
+
+    @Override
+    public boolean checkCollision(CollisionComponent other) {
         return bounds.collides(other.getBounds());
     }
 
-    /**
-     * Move this rcc so that it is touching, not overlapping the other rcc
-     */
-    public void stopAtSolid(RadialCollisionComponent rcc) {
+
+    @Override
+    public void stopAtSolid(CollisionComponent cc) {
         Vector2 newPosition = bounds.getCenter()
-                .sub(rcc.getBounds().getCenter()).nor()
-                .mul(getBounds().getRadius() + rcc.getBounds().getRadius());
-        newPosition = rcc.getBounds().getCenter().add(newPosition);
+                .sub(cc.getBounds().getCenter()).nor()
+                .mul(getBounds().getRadius() + cc.getBounds().getRadius());
+        newPosition = cc.getBounds().getCenter().add(newPosition);
         place.setPositionByCenter(newPosition);
         bounds.setCenter(place.getCenter());
     }

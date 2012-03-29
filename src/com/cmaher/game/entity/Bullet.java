@@ -3,6 +3,7 @@ package com.cmaher.game.entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.cmaher.game.GameBase;
+import com.cmaher.game.components.CollisionComponent;
 import com.cmaher.game.components.DrawComponent;
 import com.cmaher.game.components.PhysicsComponent;
 import com.cmaher.game.components.PlaceComponent;
@@ -22,7 +23,7 @@ public class Bullet extends EntityBase {
     protected DrawComponent            overlayDraw;
 
     protected boolean                  alive;
-    protected RadialCollisionComponent collision;
+    protected CollisionComponent collision;
 
     protected String                   propertyBase;
     protected static final String      P_SPRITE       = "sprite";

@@ -33,10 +33,10 @@ public class FactionableCollisionComponent extends RadialCollisionComponent {
 
     public void update(float delta) {
         super.update(delta);
-        Set<RadialCollisionComponent> collisions = master.getGame()
+        Set<CollisionComponent> collisions = master.getGame()
                 .getCollisionManager().getCollisions(this);
 
-        for (RadialCollisionComponent rcc : collisions) {
+        for (CollisionComponent rcc : collisions) {
             //only collide with factions
             if (rcc instanceof FactionableCollisionComponent) {
                 FactionableCollisionComponent collision = (FactionableCollisionComponent) rcc;
