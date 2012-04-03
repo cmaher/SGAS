@@ -4,6 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.cmaher.game.entity.Entity;
 
+
+/**
+ * TODO: properly use angle of inflection = angle of deflection to handle generic bounces
+ * @author Christian
+ *
+ */
 public class BounceComponent extends Component {
 
     private PlaceComponent     place;

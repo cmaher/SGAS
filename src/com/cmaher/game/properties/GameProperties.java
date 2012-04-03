@@ -7,9 +7,9 @@ import java.util.Properties;
 
 import com.badlogic.gdx.utils.Logger;
 
-/**
- * Singleton to handle properties loading
- * 
+//TODO: implement all necessary properties in all necessary files for SGAS
+
+/** 
  * @author Christian Maher
  * 
  */

@@ -11,7 +11,6 @@ import com.cmaher.game.components.RadialCollisionComponent;
 import com.cmaher.game.properties.GameProperties;
 
 /**
- * TODO: In Order to make this truly generic, import assets from config
  * 
  * @author Christian
  * 
